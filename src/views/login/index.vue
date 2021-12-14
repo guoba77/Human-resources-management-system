@@ -88,8 +88,8 @@ export default {
       // 表单数据
       loginForm: {
         // 技巧：字段属性名和后台请求属性名保持一致
-        mobile: '',
-        password: ''
+        mobile: '13800000002',
+        password: '123456'
       },
       // 表单校验规则
       loginRules: {

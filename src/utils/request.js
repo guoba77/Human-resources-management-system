@@ -51,11 +51,26 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
+    console.log('后台返回数据：', response)
     // 正常：状态码200进入
-    const res = response.data
+    // success:true请求成功|false请求失败  data:后台返回的数据  message:后台返回的消息提示
+    const { success, data, message } = response.data
     // 说明：返回之后，页面才能获取res数据
     // 作用：简化返回给页面的数据
-    return res
+    if (success) {
+      // 请求成功
+      return data
+    } else {
+      // 请求失败
+      // 提示
+      Message({
+        message: message,
+        type: 'error',
+        duration: 3 * 1000
+      })
+      // 抛出一个promise错误
+      return Promise.reject(new Error(message))
+    }
   },
   error => {
     // 出错：状态码400 500进入
