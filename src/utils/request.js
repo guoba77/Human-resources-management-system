@@ -6,6 +6,11 @@ import store from '@/store'
 // 1. 通过axios.create工厂函数创建请求实例
 const service = axios.create({
   // 后台请求地址（根据环境变量动态配置）
+  /**
+   * 动态获取后台请求地址：
+   * 1. 开发环境读取.env.development文件中VUE_APP_BASE_API的请求地址
+   * 2. 生产环境读取.env.production文件中VUE_APP_BASE_API的请求地址
+   */
   baseURL: process.env.VUE_APP_BASE_API // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   // timeout: 5000 // request timeout

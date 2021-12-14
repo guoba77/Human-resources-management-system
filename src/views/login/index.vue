@@ -70,7 +70,7 @@
 
 <script>
 import { validMobile as vm } from '@/utils/validate'
-
+import { login } from '@/api/user'
 export default {
   name: 'Login',
   data () {
@@ -131,21 +131,32 @@ export default {
       })
     },
     // 提交登录
-    handleLogin () {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+    async handleLogin () {
+      try {
+        await this.$refs.loginForm.validate()
+        // 整体校验通过
+        this.loading = true // 开启加载效果（避免重复点击）
+        const res = await login(this.loginForm)
+        console.log('登录成功：', res)
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+        console.log('校验失败：', error)
+      }
+      // this.$refs.loginForm.validate(valid => {
+      //   if (valid) {
+      //     this.loading = true
+      //     this.$store.dispatch('user/login', this.loginForm).then(() => {
+      //       this.$router.push({ path: this.redirect || '/' })
+      //       this.loading = false
+      //     }).catch(() => {
+      //       this.loading = false
+      //     })
+      //   } else {
+      //     console.log('error submit!!')
+      //     return false
+      //   }
+      // })
     }
   }
 }
