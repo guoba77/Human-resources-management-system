@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
-    <div class="test">test</div>
+    <div class="test">修改test</div>
   </div>
 </template>
 
