@@ -69,25 +69,18 @@
 </template>
 
 <script>
-import { validMobile } from '@/utils/validate'
+import { validMobile as vm } from '@/utils/validate'
 
 export default {
   name: 'Login',
   data () {
     // 校验手机号
     const validateMobile = (rule, value, callback) => {
-      if (!validMobile(value)) {
+      if (!vm(value)) {
         // 校验不通过
         callback(new Error('手机号格式错误！'))
       } else {
         // 校验通过
-        callback()
-      }
-    }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
-      } else {
         callback()
       }
     }
@@ -104,10 +97,12 @@ export default {
           { required: true, trigger: 'blur', validator: validateMobile }
         ],
         password: [
-          { required: true, trigger: 'blur', validator: validatePassword }
+          { required: true, trigger: 'blur', message: '密码不能为空' },
+          { min: 6, max: 16, message: '密码的长度在6-16位之间 ', trigger: 'blur' }
         ]
       },
       loading: false,
+      // 控制输入的密码是否可见
       passwordType: 'password',
       redirect: undefined
     }
@@ -123,14 +118,19 @@ export default {
   methods: {
     showPwd () {
       if (this.passwordType === 'password') {
+        // 可见
         this.passwordType = ''
       } else {
+        // 不可见
         this.passwordType = 'password'
       }
+      // vue 视图刷新是异步的 =》  this.$nextTick保证可以获取更新后的DOM
       this.$nextTick(() => {
+        // 获取焦点
         this.$refs.password.focus()
       })
     },
+    // 提交登录
     handleLogin () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
