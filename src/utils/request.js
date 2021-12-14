@@ -51,7 +51,7 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
-    console.log('后台返回数据：', response)
+    // console.log('后台返回数据：', response)
     // 正常：状态码200进入
     // success:true请求成功|false请求失败  data:后台返回的数据  message:后台返回的消息提示
     const { success, data, message } = response.data
