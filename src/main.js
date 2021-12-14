@@ -28,6 +28,8 @@ Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 
+console.log('环境变量：', process.env)
+
 new Vue({
   el: '#app',
   router, // 所有组件可以通过this.$router(跳转) | this.$route（获取路由参数）
