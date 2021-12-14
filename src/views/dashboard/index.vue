@@ -2,6 +2,7 @@
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
     <div class="test">修改test</div>
+    <p>git练习</p>
   </div>
 </template>
 

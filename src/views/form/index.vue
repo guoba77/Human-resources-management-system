@@ -62,7 +62,7 @@ export default {
   data () {
     return {
       form: {
-        name: '',
+        name: '小红',
         region: '',
         date1: '',
         date2: '',
