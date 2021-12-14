@@ -1,4 +1,4 @@
-// cover some element-ui styles
+// cover some element-ui styles 覆盖饿了吗组件库样式
 
 .el-breadcrumb__inner,
 .el-breadcrumb__inner a {
@@ -14,7 +14,6 @@
 .el-upload__input {
   display: none;
 }
-
 
 // to fixed https://github.com/ElemeFE/element/issues/2461
 .el-dialog {
@@ -39,7 +38,7 @@
 // dropdown
 .el-dropdown-menu {
   a {
-    display: block
+    display: block;
   }
 }
 
