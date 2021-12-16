@@ -26,7 +26,7 @@ export default {
   },
   created () {
     getUserInfo().then(res => {
-      console.log('当前登录人信息：', getUserInfo)
+      console.log('当前登录人信息：', res)
     })
   }
 }
