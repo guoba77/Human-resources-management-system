@@ -104,6 +104,7 @@ export default {
       loading: false,
       // 控制输入的密码是否可见
       passwordType: 'password',
+      // 回跳地址
       redirect: undefined
     }
   },
@@ -136,6 +137,7 @@ export default {
         await this.$refs.loginForm.validate()
         // 整体校验通过
         this.loading = true // 开启加载效果（避免重复点击）
+        // 一定要加await 等到成功获取token之后跳转
         await this.$store.dispatch('user/getTokenAction', this.loginForm)
         this.$router.push({ path: this.redirect || '/' })
         // const res = await login(this.loginForm)
