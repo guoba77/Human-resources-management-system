@@ -1,6 +1,11 @@
 <template>
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
+      <!-- 二级路由的挂载点 =》
+      key的目的：避免缓存
+      例如：
+      v-for遍历结构，每个结构都需要加一个唯一的key（唯一ID）
+      -->
       <router-view :key="key" />
     </transition>
   </section>
@@ -10,7 +15,7 @@
 export default {
   name: 'AppMain',
   computed: {
-    key() {
+    key () {
       return this.$route.path
     }
   }
@@ -25,7 +30,7 @@ export default {
   position: relative;
   overflow: hidden;
 }
-.fixed-header+.app-main {
+.fixed-header + .app-main {
   padding-top: 50px;
 }
 </style>
