@@ -137,6 +137,7 @@ export default {
         // 整体校验通过
         this.loading = true // 开启加载效果（避免重复点击）
         await this.$store.dispatch('user/getTokenAction', this.loginForm)
+        this.$router.push({ path: this.redirect || '/' })
         // const res = await login(this.loginForm)
         // console.log('登录成功：', res)
         this.loading = false

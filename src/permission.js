@@ -1,3 +1,41 @@
+import router from './router'
+import store from './store'
+
+// 白名单（例外=》不需要token也能访问的页面）
+const whiteList = ['/login', '/404']
+
+// (路由器前置守卫)访问页面：添加前门保安
+/**
+ * to 去哪（访问那个页面）
+ * from 从哪来（从哪个页面跳转过来）
+ * next:function 放行
+ */
+router.beforeEach((to, from, next) => {
+  /**
+   * 根据是否有token（证件）
+   * 有token =》1. 判断如果是登录页（避免重复登录），直接跳首页 2. 放行
+   * 没有token =》判断是否在白名单（例外：登录页、404页）=》 在=》放行 |不在 =》跳回登录页
+   */
+  if (store.getters.token) {
+    // 有token
+    if (to.path === '/login') {
+      // 跳首页
+      next('/')
+    } else {
+      next()
+    }
+  } else {
+    // 没有token
+    if (whiteList.includes(to.path)) {
+      // 在白名单
+      next()
+    } else {
+      // 不在白名单
+      next('/login')
+    }
+  }
+})
+
 // import router from './router'
 // import store from './store'
 // import { Message } from 'element-ui'
