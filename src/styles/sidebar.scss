@@ -10,7 +10,9 @@
   .sidebar-container {
     transition: width 0.28s;
     width: $sideBarWidth !important;
-    background-color: $menuBg;
+    // background-color: $menuBg;
+    // 菜单背景色
+    background: -webkit-linear-gradient(bottom, #3d6df8, #5b8cff);
     height: 100%;
     position: fixed;
     font-size: 0px;
@@ -28,6 +30,8 @@
 
     .scrollbar-wrapper {
       overflow-x: hidden !important;
+      // 菜单背景图
+      background: url("~@/assets/common/leftnavBg.png") no-repeat 0 100%;
     }
 
     .el-scrollbar__bar.is-vertical {
@@ -62,11 +66,40 @@
       margin-right: 12px;
       margin-left: -2px;
     }
-
+    // 菜单样式（一级）
     .el-menu {
       border: none;
       height: 100%;
       width: 100% !important;
+      a {
+        li {
+          .svg-icon {
+            color: #fff;
+            font-size: 18px;
+            vertical-align: middle;
+            .icon {
+              color: #fff;
+            }
+          }
+          span {
+            color: #fff;
+          }
+          &:hover {
+            .svg-icon {
+              color: #43a7fe;
+            }
+            span {
+              color: #43a7fe;
+            }
+          }
+        }
+        // 菜单选中
+        &.router-link-active {
+          li {
+            background: orange !important;
+          }
+        }
+      }
     }
 
     // menu hover
