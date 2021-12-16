@@ -2,12 +2,16 @@
  * 存储登录人信息
  */
 import { login } from '@/api/user'
+// 导入持计划方法
+import * as auth from '@/utils/auth'
+console.log('导入auth模块所有方法：', auth)
 export default {
   // 开启命名空间（模块化）
   namespaced: true,
   // 定义数据变量（全局共享的）（和组件data类似的：私有）=》相同点：响应式的
   state: {
-    token: ''
+    // 默认从本地获取一次token（获取上一次存储的token）
+    token: auth.getToken() || ''
   },
   // 修改state定义的变量（只能通过它修改）=》特点：同步
   mutations: {
@@ -17,7 +21,9 @@ export default {
      * @param {*} token 调用setToken方法传入要存储的token值
      */
     setToken (state, token) {
+      // 内存和硬盘都存一份
       state.token = token
+      auth.setToken(token)
     },
     /**
      * 删除token
@@ -25,6 +31,7 @@ export default {
      */
     delToken (state) {
       state.token = ''
+      auth.removeToken()
     }
   },
   // 获取后台数据的方法 =》特点：异步

@@ -1,15 +1,30 @@
+/**
+ * 使用cookie存储token
+ */
 import Cookies from 'js-cookie'
 
-const TokenKey = 'vue_admin_template_token'
+// 存储的属性名
+const TokenKey = 'hr-sass-141'
 
-export function getToken() {
+/**
+ * 获取本地存储的token
+ * @returns token值
+ */
+export function getToken () {
   return Cookies.get(TokenKey)
 }
-
-export function setToken(token) {
+/**
+ * 存储token到本地cookie
+ * @param {*} token
+ * @returns
+ */
+export function setToken (token) {
   return Cookies.set(TokenKey, token)
 }
-
-export function removeToken() {
+/**
+ * 删除本地token
+ * @returns
+ */
+export function removeToken () {
   return Cookies.remove(TokenKey)
 }
