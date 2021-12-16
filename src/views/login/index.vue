@@ -70,7 +70,7 @@
 
 <script>
 import { validMobile as vm } from '@/utils/validate'
-import { login } from '@/api/user'
+
 export default {
   name: 'Login',
   data () {
@@ -136,8 +136,9 @@ export default {
         await this.$refs.loginForm.validate()
         // 整体校验通过
         this.loading = true // 开启加载效果（避免重复点击）
-        const res = await login(this.loginForm)
-        console.log('登录成功：', res)
+        await this.$store.dispatch('user/getTokenAction', this.loginForm)
+        // const res = await login(this.loginForm)
+        // console.log('登录成功：', res)
         this.loading = false
       } catch (error) {
         this.loading = false
