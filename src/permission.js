@@ -1,5 +1,9 @@
 import router from './router'
 import store from './store'
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css' // progress bar style
+
+NProgress.configure({ showSpinner: true }) // NProgress Configuration
 
 // 白名单（例外=》不需要token也能访问的页面）
 const whiteList = ['/login', '/404']
@@ -11,6 +15,8 @@ const whiteList = ['/login', '/404']
  * next:function 放行
  */
 router.beforeEach((to, from, next) => {
+  // start progress bar 显示页面加载进度条
+  NProgress.start()
   /**
    * 根据是否有token（证件）
    * 有token =》1. 判断如果是登录页（避免重复登录），直接跳首页 2. 放行
@@ -34,6 +40,9 @@ router.beforeEach((to, from, next) => {
       next('/login')
     }
   }
+
+  // finish progress bar 关闭进度条
+  NProgress.done()
 })
 
 // import router from './router'
