@@ -11,6 +11,7 @@ import { mapGetters } from 'vuex'
 // 导入scss中导出的变量
 import stys from '@/styles/variables.scss'
 console.log('样式：', stys)
+import { getUserInfo } from '@/api/user'
 export default {
   name: 'Dashboard',
   data () {
@@ -22,6 +23,11 @@ export default {
     ...mapGetters([
       'name'
     ])
+  },
+  created () {
+    getUserInfo().then(res => {
+      console.log('当前登录人信息：', getUserInfo)
+    })
   }
 }
 </script>
