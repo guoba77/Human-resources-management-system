@@ -1,3 +1,6 @@
+/**
+ * 快捷访问=》子模块的数据
+ */
 const getters = {
   sidebar: state => state.app.sidebar,
   device: state => state.app.device,
