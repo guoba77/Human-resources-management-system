@@ -24,7 +24,7 @@ export const fb = {
    * @param {*} opt 获取指令绑定的变量值
    */
   inserted (el, opt) {
-    console.log(el, opt)
+    // console.log(el, opt)
     el.style.border = `2px solid ${opt.value || 'red'}`
   }
 }
