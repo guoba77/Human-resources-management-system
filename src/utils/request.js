@@ -77,7 +77,7 @@ service.interceptors.response.use(
     // 出错：状态码400 500进入
     // error 对象 =》只能通过console.dir
     console.dir(error) // for debug
-    // 需求：判断请求401了(未登录或token失效)，跳转会登录页
+    // 需求：判断请求401了(未登录或token失效)，跳转回登录页
     if (error.response.status === 401) {
       // 处理某些页面多个请求多次401重复跳转问题，造成重新登录后不能正确跳转到上次访问页面问题
       if (router.currentRoute.path === '/login') return
