@@ -20,7 +20,7 @@
         <!-- 显示登录人信息 -->
         <div class="avatar-wrapper">
           <!-- <img src="@/assets/common/bigUserHeader.png" class="user-avatar" /> -->
-          <img :src="avatar" class="user-avatar" />
+          <img v-imgerr="degImg" :src="avatar" class="user-avatar" />
           <span class="name">{{ name }}</span>
           <i class="el-icon-caret-bottom" style="color: #fff" />
         </div>
@@ -45,11 +45,17 @@
 import { mapGetters } from 'vuex'
 // import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import degImg from '@/assets/common/bigUserHeader.png'
 
 export default {
   components: {
     // Breadcrumb,
     Hamburger
+  },
+  data () {
+    return {
+      degImg
+    }
   },
   computed: {
     ...mapGetters([

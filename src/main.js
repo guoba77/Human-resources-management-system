@@ -21,13 +21,17 @@ import '@/icons' // icon
 // 执行路由守卫钩子函数
 import '@/permission' // permission control
 
+// 导入指令对象
+import * as dicts from '@/directives'
+console.log('指令对象：', dicts)
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
-
+// 处理图片加载失败指令注册
+Vue.directive('imgerr', dicts.imgerr)
 // 测试回顾全局指令用法 注意：定义的时候指令名不要加v-
 Vue.directive('fb', {
   /**
