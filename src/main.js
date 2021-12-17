@@ -28,6 +28,19 @@ Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 
+// 测试回顾全局指令用法 注意：定义的时候指令名不要加v-
+Vue.directive('fb', {
+  /**
+   *
+   * @param {*} el 当前绑定指令的DOM对象
+   * @param {*} opt 获取指令绑定的变量值
+   */
+  inserted (el, opt) {
+    console.log(el, opt)
+    el.style.border = `2px solid ${opt.value || 'red'}`
+  }
+})
+
 console.log('环境变量：', process.env)
 
 new Vue({
