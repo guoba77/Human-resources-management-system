@@ -74,6 +74,14 @@ export default {
       const photo = await getUserDetailById(user.userId)
       // console.log('登录人信息：', user, photo)
       commit('setUser', { ...user, ...photo })
+    },
+    /**
+     * 退出登录=》删除token和登录人user信息
+     * @param {} param0
+     */
+    logoutAction ({ commit }) {
+      commit('delToken')
+      commit('delUser')
     }
   }
 }

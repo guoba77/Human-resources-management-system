@@ -68,9 +68,25 @@ export default {
     toggleSideBar () {
       this.$store.dispatch('app/toggleSideBar')
     },
+    // 退出登录
     async logout () {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      console.log('logout')
+      /**
+       * 1. 用户确认
+       * 2. 确认后退出登录
+       * 3. 调用action清除本地登录（token）
+       * 4. 跳回登录页
+       */
+      try {
+        await this.$confirm('确认退出人资中台吗？', '提示')
+        //  点击确认走到这里
+        // console.log('点击确认走到这里')
+        this.$store.dispatch('user/logoutAction')
+        // replace 替换当前路由跳转（不记录）
+        this.$router.replace('/login')
+      } catch (error) {
+        console.log('点击取消走到这里', error)
+      }
     }
   }
 }
