@@ -31,7 +31,20 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-export const asyncRoutes = []
+export const asyncRoutes = [
+  {
+    path: '/departments',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/departments'),
+        meta: { title: '组织架构', icon: 'dashboard' }
+      }
+    ]
+
+  }
+]
 
 export const constantRoutes = [
   // 登录
