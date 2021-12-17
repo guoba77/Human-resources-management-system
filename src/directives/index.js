@@ -10,7 +10,7 @@ export const imgerr = {
    */
   inserted (el, opt) {
     el.onerror = () => {
-      // 注册图片加载失败事件=》就会执行这个回调函数
+      // 注册图片加载失败事件=》加载失败就会执行这个回调函数
       el.src = opt.value
     }
   }
