@@ -9,9 +9,23 @@ export const imgerr = {
    * @param {*} opt 获取指令绑定的变量值
    */
   inserted (el, opt) {
+    // 类似window.onload=()=>{}
     el.onerror = () => {
       // 注册图片加载失败事件=》加载失败就会执行这个回调函数
       el.src = opt.value
     }
   }
 }
+
+export const fb = {
+  /**
+   *
+   * @param {*} el 当前绑定指令的DOM对象
+   * @param {*} opt 获取指令绑定的变量值
+   */
+  inserted (el, opt) {
+    console.log(el, opt)
+    el.style.border = `2px solid ${opt.value || 'red'}`
+  }
+}
+

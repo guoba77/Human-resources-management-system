@@ -30,20 +30,16 @@ console.log('指令对象：', dicts)
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
-// 处理图片加载失败指令注册
-Vue.directive('imgerr', dicts.imgerr)
-// 测试回顾全局指令用法 注意：定义的时候指令名不要加v-
-Vue.directive('fb', {
-  /**
-   *
-   * @param {*} el 当前绑定指令的DOM对象
-   * @param {*} opt 获取指令绑定的变量值
-   */
-  inserted (el, opt) {
-    console.log(el, opt)
-    el.style.border = `2px solid ${opt.value || 'red'}`
-  }
+
+// 批量注册模块中指令
+Object.keys(dicts).forEach(key => {
+  Vue.directive(key, dicts[key])
 })
+
+// // 处理图片加载失败指令注册
+// Vue.directive('imgerr', dicts.imgerr)
+// // 测试回顾全局指令用法 注意：定义的时候指令名不要加v-
+// Vue.directive('fb', dicts.fb)
 
 console.log('环境变量：', process.env)
 
