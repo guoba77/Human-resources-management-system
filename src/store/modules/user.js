@@ -70,7 +70,8 @@ export default {
     async getUserAction ({ commit }) {
       // 1. 获取登录人信息
       const user = await getUserInfo()
-      console.log('登录人信息：', user)
+      // console.log('登录人信息：', user)
+      commit('setUser', user)
     }
   }
 }

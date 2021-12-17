@@ -29,6 +29,8 @@ router.beforeEach((to, from, next) => {
       next('/')
     } else {
       next()
+      // 放行后，获取登录人信息
+      store.dispatch('user/getUserAction')
     }
   } else {
     // 没有token
