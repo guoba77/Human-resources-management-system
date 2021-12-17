@@ -27,10 +27,12 @@ import Layout from '@/layout'
  */
 
 /**
- * constantRoutes 静态路由（不需要权限，就能看的页面）| 动态路由（需要有权限，才能看的页面）
+ * constantRoutes 静态路由（不需要权限，就能看的页面）| asyncRoutes 动态路由（需要有权限，才能看的页面）
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
+export const asyncRoutes = []
+
 export const constantRoutes = [
   // 登录
   {
@@ -63,7 +65,8 @@ export const constantRoutes = [
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  // 暂时合并（说明：后期动态路由是要根据用户权限，动态添加的）
+  routes: [...constantRoutes, ...asyncRoutes]
 })
 // 通过工厂函数得到路由实例
 const router = createRouter()
