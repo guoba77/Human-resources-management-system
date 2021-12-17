@@ -19,8 +19,9 @@
       <el-dropdown class="avatar-container" trigger="click">
         <!-- 显示登录人信息 -->
         <div class="avatar-wrapper">
-          <img src="@/assets/common/bigUserHeader.png" class="user-avatar" />
-          <span class="name">管理员</span>
+          <!-- <img src="@/assets/common/bigUserHeader.png" class="user-avatar" /> -->
+          <img :src="avatar" class="user-avatar" />
+          <span class="name">{{ name }}</span>
           <i class="el-icon-caret-bottom" style="color: #fff" />
         </div>
         <!-- 下拉菜单 -->
@@ -53,7 +54,8 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'avatar',
+      'name'
     ])
   },
   methods: {

@@ -1,7 +1,7 @@
 /**
  * 存储登录人信息
  */
-import { login, getUserInfo } from '@/api/user'
+import { login, getUserInfo, getUserDetailById } from '@/api/user'
 // 导入持计划方法
 import * as auth from '@/utils/auth'
 // console.log('导入auth模块所有方法：', auth)
@@ -70,8 +70,10 @@ export default {
     async getUserAction ({ commit }) {
       // 1. 获取登录人信息
       const user = await getUserInfo()
-      // console.log('登录人信息：', user)
-      commit('setUser', user)
+      // 2. 获取登录人头像
+      const photo = await getUserDetailById(user.userId)
+      // console.log('登录人信息：', user, photo)
+      commit('setUser', { ...user, ...photo })
     }
   }
 }

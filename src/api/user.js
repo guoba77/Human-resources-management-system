@@ -25,6 +25,17 @@ export function getUserInfo () {
   })
 }
 
+/**
+ * @description: 获取用户头像
+ * @param {*} id 用户id
+ * @return {*}
+ */
+export function getUserDetailById (id) {
+  return request({
+    url: `/sys/user/${id}`
+  })
+}
+
 export function getInfo (token) {
   return request({
     url: '/vue-admin-template/user/info',
