@@ -104,11 +104,12 @@ export default {
       loading: false,
       // 控制输入的密码是否可见
       passwordType: 'password',
-      // 回跳地址
+      // 回跳地址(上次401访问页面地址)
       redirect: undefined
     }
   },
   watch: {
+    // 监听$route的参数变化
     $route: {
       handler: function (route) {
         this.redirect = route.query && route.query.redirect

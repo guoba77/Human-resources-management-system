@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
+import router from '@/router'
 
 // create an axios instance
 // 1. 通过axios.create工厂函数创建请求实例
@@ -74,12 +75,24 @@ service.interceptors.response.use(
   },
   error => {
     // 出错：状态码400 500进入
-    console.log('err' + error) // for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    // error 对象 =》只能通过console.dir
+    console.dir(error) // for debug
+    // 需求：判断请求401了(未登录或token失效)，跳转会登录页
+    if (error.response.status === 401) {
+      // 处理某些页面多个请求多次401重复跳转问题，造成重新登录后不能正确跳转到上次访问页面问题
+      if (router.currentRoute.path === '/login') return
+      Message({
+        message: error.response.data.message,
+        type: 'error',
+        duration: 3 * 1000
+      })
+      // 清除token和登录人信息
+      store.dispatch('user/logoutAction')
+      // 说明：跳转的时候携带当前出现401页面的地址参数，目的是下次登录成功后跳回上次访问页面
+      // router.currentRoute.path 获取当前页面的地址
+      router.replace(`/login?redirect=${router.currentRoute.path}`)
+    }
+
     return Promise.reject(error)
   }
 )
