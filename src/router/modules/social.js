@@ -9,7 +9,7 @@ export default {
       path: '',
       name: 'social', // 后期：权限控制会使用
       component: () => import('@/views/social'),
-      meta: { title: '社保', icon: 'dashboard' }
+      meta: { title: '社保', icon: 'table' }
     }
   ]
 

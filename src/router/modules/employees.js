@@ -9,7 +9,7 @@ export default {
       path: '',
       name: 'employees', // 后期：权限控制会使用
       component: () => import('@/views/employees'),
-      meta: { title: '员工管理', icon: 'dashboard' }
+      meta: { title: '员工管理', icon: 'people' }
     }
   ]
 

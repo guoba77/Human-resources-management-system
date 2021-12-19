@@ -9,7 +9,7 @@ export default {
       path: '',
       name: 'approvals', // 后期：权限控制会使用
       component: () => import('@/views/approvals'),
-      meta: { title: '审批', icon: 'dashboard' }
+      meta: { title: '审批', icon: 'tree-table' }
     }
   ]
 

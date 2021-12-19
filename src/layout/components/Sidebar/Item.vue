@@ -12,7 +12,7 @@ export default {
       default: ''
     }
   },
-  // 渲染模板=》相当于template
+  // 渲染模板=》相当于template（react的jsx）
   render (h, context) {
     const { icon, title } = context.props
     const vnodes = []

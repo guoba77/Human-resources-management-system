@@ -9,7 +9,7 @@ export default {
       path: '',
       name: 'permission', // 后期：权限控制会使用
       component: () => import('@/views/permission'),
-      meta: { title: '权限管理', icon: 'dashboard' }
+      meta: { title: '权限管理', icon: 'lock' }
     }
   ]
 

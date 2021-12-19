@@ -8,6 +8,10 @@
         !item.alwaysShow
       "
     >
+      <!--
+      onlyOneChild.meta.title 读取菜单名
+      onlyOneChild.meta.icon 读取菜单图标名
+    -->
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item
           :index="resolvePath(onlyOneChild.path)"
@@ -20,7 +24,7 @@
         </el-menu-item>
       </app-link>
     </template>
-    <!-- 二级菜单 -->
+    <!-- 子级菜单 -->
     <!-- <el-submenu
       v-else
       ref="subMenu"

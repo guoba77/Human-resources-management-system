@@ -9,7 +9,7 @@ export default {
       path: '',
       name: 'salarys', // 后期：权限控制会使用
       component: () => import('@/views/salarys'),
-      meta: { title: '工资', icon: 'dashboard' }
+      meta: { title: '工资', icon: 'money' }
     }
   ]
 
