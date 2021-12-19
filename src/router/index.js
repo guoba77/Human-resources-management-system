@@ -7,6 +7,19 @@ Vue.use(Router)
 // 公共布局组件
 import Layout from '@/layout'
 
+// 导入路由规则
+// 引入多个动态路由模块
+import approvalsRouter from './modules/approvals'
+import departmentsRouter from './modules/departments'
+import employeesRouter from './modules/employees'
+import permissionRouter from './modules/permission'
+import attendancesRouter from './modules/attendances'
+import salarysRouter from './modules/salarys'
+import settingRouter from './modules/setting'
+import socialRouter from './modules/social'
+
+// console.log(1, departmentsRouter)
+
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -32,18 +45,15 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const asyncRoutes = [
-  {
-    path: '/departments',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/departments'),
-        meta: { title: '组织架构', icon: 'dashboard' }
-      }
-    ]
+  approvalsRouter,
+  departmentsRouter,
+  employeesRouter,
+  permissionRouter,
+  attendancesRouter,
+  salarysRouter,
+  settingRouter,
+  socialRouter
 
-  }
 ]
 
 export const constantRoutes = [
