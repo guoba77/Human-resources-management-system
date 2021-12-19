@@ -3,12 +3,24 @@
  */
 
 /**
+ *
+ * @param {*} list 部门数据列表（没有父子关系，也就是不是树形结构）
+ * list数据的规律：
+ * 1. 公司的pid值：'-1'
+ * 2. 公司下顶级部门pid值：''
+ * 3. 子部门pid值：父部门id值（纽带关系）=》重点
+ */
+export function tranformTreeData (list) {
+  console.log('被转换的数据：', list)
+}
+
+/**
  * Parse the time to string
  * @param {(Object|string|number)} time
  * @param {string} cFormat
  * @returns {string | null}
  */
-export function parseTime(time, cFormat) {
+export function parseTime (time, cFormat) {
   if (arguments.length === 0 || !time) {
     return null
   }
@@ -45,7 +57,7 @@ export function parseTime(time, cFormat) {
   const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
     const value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value ] }
+    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value] }
     return value.toString().padStart(2, '0')
   })
   return time_str
@@ -56,7 +68,7 @@ export function parseTime(time, cFormat) {
  * @param {string} option
  * @returns {string}
  */
-export function formatTime(time, option) {
+export function formatTime (time, option) {
   if (('' + time).length === 10) {
     time = parseInt(time) * 1000
   } else {
@@ -98,7 +110,7 @@ export function formatTime(time, option) {
  * @param {string} url
  * @returns {Object}
  */
-export function param2Obj(url) {
+export function param2Obj (url) {
   const search = decodeURIComponent(url.split('?')[1]).replace(/\+/g, ' ')
   if (!search) {
     return {}

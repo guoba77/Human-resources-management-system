@@ -71,13 +71,16 @@
 
 <script>
 import { getDepartments } from '@/api/departments'
+// 导入树形转换方法
+import { tranformTreeData } from '@/utils'
 /**
  * 开发页面流程：
  * 1. 在api目录封装当前页面后台接口方法
  * 2. 导入需要使用的后台接口方法
- * 3. data中定义存储后台看数据的变量
+ * 3. data中定义存储后台数据的变量
  * 4. 在methods中定义获取后台数据的方法
  * 5. 在created/mounted钩子函数中发请求获取数据并存储到data变量中
+ * 6. 在template中绑定变量或事件（功能交互）
  */
 export default {
   data () {
@@ -99,7 +102,8 @@ export default {
     // 获取部门数据
     async getTreeData () {
       const { depts, companyName } = await getDepartments()
-      console.log(depts)
+      console.table(depts)
+      console.log(tranformTreeData(depts))
       this.treeData = depts
       this.company.name = companyName
     }
