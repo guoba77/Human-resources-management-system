@@ -11,7 +11,46 @@
  * 3. 子部门pid值：父部门id值（纽带关系）=》重点
  */
 export function tranformTreeData (list) {
-  console.log('被转换的数据：', list)
+  // console.log('被转换的数据：', list)
+  /**
+   * 思路：
+   * 1. 准备空数组，存储转换后数据
+   * 2. 生成一个map映射关系
+   * 3. 循环list根据map关系查找父部门
+   * 4. 返回转换后的数据
+   */
+  const treeData = []
+  // 开始转换
+  const map = {}
+  list.forEach(item => {
+    map[item.id] = item
+  })
+  // 部门数据映射关系
+  console.log('部门数据映射关系:', map)
+  list.forEach(item => {
+    // 排除公司
+    if (item.pid === '-1') return
+    // 找父
+    const parent = map[item.pid]
+    /**
+     * 根据map对象找父部门：
+     * 1. item.pid如果是空（''）或-1: 没有父
+     * 2. item.pid是父部门的id值：有父
+     */
+    if (parent) {
+      if (!parent.children) {
+        // 第一次的时候，给父部门初始化children=》存储子部门
+        parent.children = []
+      }
+      parent.children.push(item)
+    } else {
+      // 公司或顶部部门
+      treeData.push(item)
+    }
+  })
+
+  // 结束转换
+  return treeData
 }
 
 /**

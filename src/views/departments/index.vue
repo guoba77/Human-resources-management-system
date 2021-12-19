@@ -103,8 +103,8 @@ export default {
     async getTreeData () {
       const { depts, companyName } = await getDepartments()
       console.table(depts)
-      console.log(tranformTreeData(depts))
-      this.treeData = depts
+      // console.log(tranformTreeData(depts))
+      this.treeData = tranformTreeData(depts)
       this.company.name = companyName
     }
   }
