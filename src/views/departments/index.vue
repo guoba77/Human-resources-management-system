@@ -10,7 +10,7 @@
           <!-- 用一个行列布局 -->
           <el-row>
             <el-col :span="20">
-              <span>江苏传智播客教育科技股份有限公司</span>
+              <span>{{ company.name }}</span>
             </el-col>
             <el-col :span="4">
               <el-row type="flex" justify="end">
@@ -70,44 +70,38 @@
 </template>
 
 <script>
+import { getDepartments } from '@/api/departments'
+/**
+ * 开发页面流程：
+ * 1. 在api目录封装当前页面后台接口方法
+ * 2. 导入需要使用的后台接口方法
+ * 3. data中定义存储后台看数据的变量
+ * 4. 在methods中定义获取后台数据的方法
+ * 5. 在created/mounted钩子函数中发请求获取数据并存储到data变量中
+ */
 export default {
   data () {
     return {
       // 公司部门数据（树形结构）
-      treeData: [
-        {
-          name: '总裁办',
-          children: [
-            {
-              name: '秘书处',
-              children: [
-                {
-                  name: '前台'
-                }
-              ]
-            },
-            {
-              name: '行政部'
-            }
-          ]
-        },
-        {
-          name: '开发部',
-          children: [
-            {
-              name: '前端开发'
-            },
-            {
-              name: '后台开发'
-            }
-          ]
-        }
-      ],
+      treeData: [],
+      company: { name: '' }, // 公司信息
       // 需求：后台返回的数据部门名叫name
       defaultProps: {
         children: 'children',
         label: 'name' // 指定渲染使用的部门属性名叫name
       }
+    }
+  },
+  created () {
+    this.getTreeData()
+  },
+  methods: {
+    // 获取部门数据
+    async getTreeData () {
+      const { depts, companyName } = await getDepartments()
+      console.log(depts)
+      this.treeData = depts
+      this.company.name = companyName
     }
   }
 }
