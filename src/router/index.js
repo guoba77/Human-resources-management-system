@@ -45,13 +45,13 @@ import socialRouter from './modules/social'
  * all roles can be accessed
  */
 export const asyncRoutes = [
-  approvalsRouter,
   departmentsRouter,
+  settingRouter,
   employeesRouter,
   permissionRouter,
+  approvalsRouter,
   attendancesRouter,
   salarysRouter,
-  settingRouter,
   socialRouter
 
 ]
