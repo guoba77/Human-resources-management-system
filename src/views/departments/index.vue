@@ -55,7 +55,9 @@
                       <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item>添加子部门</el-dropdown-item>
                         <el-dropdown-item>编辑部门</el-dropdown-item>
-                        <el-dropdown-item>删除部门</el-dropdown-item>
+                        <el-dropdown-item @click.native="delDept(data)">
+                          删除部门
+                        </el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
                   </el-col>
@@ -70,7 +72,7 @@
 </template>
 
 <script>
-import { getDepartments } from '@/api/departments'
+import { getDepartments, delDepartments } from '@/api/departments'
 // 导入树形转换方法
 import { tranformTreeData } from '@/utils'
 /**
@@ -106,6 +108,34 @@ export default {
       // console.log(tranformTreeData(depts))
       this.treeData = tranformTreeData(depts)
       this.company.name = companyName
+    },
+    // curDept 当前要删除的部门数据
+    async delDept (curDept) {
+      // console.log('删除的部门：', curDept)
+      /**
+       * 删除思路：
+       * 1. 用户确认
+       * 2. 确认之后=》判断是否是父部门=》是=》不能删除
+       * 3. 如果没有子就可以调用接口删除
+       * 4. 重新获取部门数据
+       */
+      try {
+        await this.$confirm(`确认删除:${curDept.name}吗`)
+        // 点击确定走到这里
+        if (curDept.children && curDept.children.length > 0) {
+          // 是父部门
+          return this.$message.error('不能直接删除父部门')
+        }
+        // 删除逻辑
+        await delDepartments(curDept.id)
+        // 刷新列表
+        this.getTreeData()
+        this.$message.success('删除成功')
+      } catch (error) {
+        // 点击取消或代码写错了
+        // this.$message.error(error)
+        console.log(error)
+      }
     }
   }
 }
