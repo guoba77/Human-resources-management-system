@@ -171,12 +171,12 @@ export default {
         await this.$refs.fm.validate()
         // 校验通过
         // 1. 调用接口新增|编辑
-        // pid: '' // 1. 顶级部门 =》传空  2. 子部门 =》传父部门的ID
         if (this.form.id) {
           // 编辑
           await updateDepartments(this.form)
         } else {
           // 新增
+          // pid: '' // 1. 顶级部门 =》传空  2. 子部门 =》传父部门的ID
           await addDepartments({ ...this.form, pid: this.parentDept.id || '' })
         }
         // 2. 新增成功获取最新数据=》刷新组织架构列表
