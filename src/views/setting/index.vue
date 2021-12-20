@@ -56,6 +56,7 @@ export default {
     return {
       // 角色列表
       list: [],
+      // 分页查询参数
       query: {
         page: 1, // 页码
         pagesize: 2, // 每页多少条数据
