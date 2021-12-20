@@ -21,7 +21,9 @@
                   <el-dropdown>
                     <span> 操作<i class="el-icon-arrow-down" /> </span>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item>添加子部门</el-dropdown-item>
+                      <el-dropdown-item @click.native="openAddDept()">
+                        添加顶级部门
+                      </el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </el-col>
@@ -53,7 +55,9 @@
                       <span> 操作<i class="el-icon-arrow-down" /> </span>
                       <!-- 下拉菜单 -->
                       <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>添加子部门</el-dropdown-item>
+                        <el-dropdown-item @click.native="openAddDept(data)">
+                          添加子部门
+                        </el-dropdown-item>
                         <el-dropdown-item>编辑部门</el-dropdown-item>
                         <el-dropdown-item @click.native="delDept(data)">
                           删除部门
@@ -68,6 +72,8 @@
         </el-tree>
       </el-card>
     </div>
+    <!-- 弹层放到根元素结束之前 -->
+    <AddDept :show-dialog="showDialog" @close-dialog="showDialog = $event" />
   </div>
 </template>
 
@@ -75,6 +81,8 @@
 import { getDepartments, delDepartments } from '@/api/departments'
 // 导入树形转换方法
 import { tranformTreeData } from '@/utils'
+// 导入新增部门弹层
+import AddDept from './components/add-dept.vue'
 /**
  * 开发页面流程：
  * 1. 在api目录封装当前页面后台接口方法
@@ -85,8 +93,12 @@ import { tranformTreeData } from '@/utils'
  * 6. 在template中绑定变量或事件（功能交互）
  */
 export default {
+  components: {
+    AddDept
+  },
   data () {
     return {
+      showDialog: false,
       // 公司部门数据（树形结构）
       treeData: [],
       company: { name: '' }, // 公司信息
@@ -94,13 +106,22 @@ export default {
       defaultProps: {
         children: 'children',
         label: 'name' // 指定渲染使用的部门属性名叫name
-      }
+      },
+      parentDept: null
     }
   },
   created () {
     this.getTreeData()
   },
   methods: {
+    // 打开新增部门弹层方法
+    // parentDept 添加子部门的父部门数据 =》说明：顶级部门没有父，所以parentDept是undefined
+    openAddDept (parentDept) {
+      // 1. 存储子部门的父部门
+      this.parentDept = parentDept
+      // 2. 打开弹层
+      this.showDialog = true
+    },
     // 获取部门数据
     async getTreeData () {
       const { depts, companyName } = await getDepartments()
