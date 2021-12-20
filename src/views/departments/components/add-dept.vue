@@ -51,6 +51,7 @@
 
 <script>
 import { getEmployeeSimple } from '@/api/employees'
+import { addDepartments } from '@/api/departments'
 export default {
   props: {
     // 父传子
@@ -58,6 +59,11 @@ export default {
     showDialog: {
       type: Boolean,
       default: false
+    },
+    // 父部门数据
+    parentDept: {
+      type: Object,
+      default: () => ({})
     }
   },
   data () {
@@ -112,6 +118,14 @@ export default {
       try {
         await this.$refs.fm.validate()
         // 校验通过
+        // 1. 调用接口新增
+        // pid: '' // 1. 顶级部门 =》传空  2. 子部门 =》传父部门的ID
+        await addDepartments({ ...this.form, pid: this.parentDept.id || '' })
+        // 2. 新增成功获取最新数据=》刷新组织架构列表
+        this.$emit('refresh-dept')
+        // 3. 关闭弹层
+        this.$emit('close-dialog', false)
+        this.$message.success('操作成功')
       } catch (error) {
         console.log('校验失败', error)
       }

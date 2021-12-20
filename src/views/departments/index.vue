@@ -73,7 +73,12 @@
       </el-card>
     </div>
     <!-- 弹层放到根元素结束之前 -->
-    <AddDept :show-dialog="showDialog" @close-dialog="showDialog = $event" />
+    <AddDept
+      :show-dialog="showDialog"
+      :parent-dept="parentDept"
+      @close-dialog="showDialog = $event"
+      @refresh-dept="getTreeData"
+    />
   </div>
 </template>
 
