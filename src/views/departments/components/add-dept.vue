@@ -134,6 +134,15 @@ export default {
       // console.log('弹层关闭了')
       // 通过子传父修改showDialog关闭弹层
       this.$emit('close-dialog', false)
+      // 这里手动清除的目的，是为实现编辑功能做准备
+      this.form = {
+        name: '',
+        code: '',
+        manager: '',
+        introduce: ''
+      }
+      // 清除校验残留
+      this.$refs.fm.resetFields()
     },
     // 新增部门
     async addDept () {
