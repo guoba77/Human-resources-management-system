@@ -58,7 +58,7 @@
 
 <script>
 import { getEmployeeSimple } from '@/api/employees'
-import { addDepartments, getDepartDetail } from '@/api/departments'
+import { addDepartments, getDepartDetail, updateDepartments } from '@/api/departments'
 export default {
   props: {
     // 父传子
@@ -88,7 +88,15 @@ export default {
      * cb 控制校验是否通过：cb() 通过 | cb(new Error('错误提示信息'))
      */
     const validCode = (rule, value, cb) => {
-      if (this.allDepts.some(item => item.code === value)) {
+      let flag
+      if (this.form.id) {
+        // 编辑=>排除自身
+        flag = this.allDepts.some(item => item.code === value && value !== this.parentDept.code)
+      } else {
+        // 新增
+        flag = this.allDepts.some(item => item.code === value)
+      }
+      if (flag) {
         // 重复
         cb(new Error('部门编码重复了！'))
       }
@@ -162,9 +170,15 @@ export default {
       try {
         await this.$refs.fm.validate()
         // 校验通过
-        // 1. 调用接口新增
+        // 1. 调用接口新增|编辑
         // pid: '' // 1. 顶级部门 =》传空  2. 子部门 =》传父部门的ID
-        await addDepartments({ ...this.form, pid: this.parentDept.id || '' })
+        if (this.form.id) {
+          // 编辑
+          await updateDepartments(this.form)
+        } else {
+          // 新增
+          await addDepartments({ ...this.form, pid: this.parentDept.id || '' })
+        }
         // 2. 新增成功获取最新数据=》刷新组织架构列表
         this.$emit('refresh-dept')
         // 3. 关闭弹层
