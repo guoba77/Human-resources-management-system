@@ -22,3 +22,16 @@ export function deleteRole (id) {
     method: 'delete'
   })
 }
+
+/**
+ * @description: 新增角色
+ * @param {*} data {name,description}
+ * @return {*}
+ */
+export function addRole (data) {
+  return request({
+    url: '/sys/role',
+    data,
+    method: 'post'
+  })
+}
