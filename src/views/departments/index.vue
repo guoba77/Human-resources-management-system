@@ -55,10 +55,12 @@
                       <span> 操作<i class="el-icon-arrow-down" /> </span>
                       <!-- 下拉菜单 -->
                       <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item @click.native="openAddDept(data)">
+                        <el-dropdown-item @click.native="openAddDept(data, 1)">
                           添加子部门
                         </el-dropdown-item>
-                        <el-dropdown-item>编辑部门</el-dropdown-item>
+                        <el-dropdown-item @click.native="openAddDept(data, 2)">
+                          编辑部门
+                        </el-dropdown-item>
                         <el-dropdown-item @click.native="delDept(data)">
                           删除部门
                         </el-dropdown-item>
@@ -74,6 +76,7 @@
     </div>
     <!-- 弹层放到根元素结束之前 -->
     <AddDept
+      ref="ad"
       :show-dialog="showDialog"
       :parent-dept="parentDept"
       :all-depts="allDepts"
@@ -124,11 +127,18 @@ export default {
   methods: {
     // 打开新增部门弹层方法
     // parentDept 添加子部门的父部门数据 =》说明：顶级部门没有父，所以parentDept是undefined
-    openAddDept (parentDept) {
+    // type: 1 代表新增   2 代表编辑=》 回填数据（发请求获取当前编辑部门数据）=》修改
+    openAddDept (parentDept, type) {
       // 1. 存储子部门的父部门
       this.parentDept = parentDept
       // 2. 打开弹层
       this.showDialog = true
+      if (type === 2) {
+        // 编辑状态
+        // this.$refs.ad 弹层组件实例
+        this.$refs.ad.getDeptDetil(parentDept.id)
+      }
+      // console.log(type)
     },
     // 获取部门数据
     async getTreeData () {

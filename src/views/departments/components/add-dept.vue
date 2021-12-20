@@ -1,5 +1,10 @@
 <template>
-  <el-dialog title="新增部门" :visible="showDialog" width="50%" @close="close">
+  <el-dialog
+    :title="form.id ? '编辑部门' : '新增部门'"
+    :visible="showDialog"
+    width="50%"
+    @close="close"
+  >
     <!-- 新增部门表单 -->
     <el-form ref="fm" :model="form" :rules="rules" label-width="120px">
       <el-form-item label="部门名称" prop="name">
@@ -44,14 +49,16 @@
     <!-- 弹层底部放置操作按钮的具名插槽 -->
     <span slot="footer">
       <el-button @click="$emit('close-dialog', false)">取消</el-button>
-      <el-button type="primary" @click="addDept">新增</el-button>
+      <el-button type="primary" @click="addDept">{{
+        form.id ? "修改" : "新增"
+      }}</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
 import { getEmployeeSimple } from '@/api/employees'
-import { addDepartments } from '@/api/departments'
+import { addDepartments, getDepartDetail } from '@/api/departments'
 export default {
   props: {
     // 父传子
@@ -123,6 +130,12 @@ export default {
     this.getPeoples()
   },
   methods: {
+    // 获取编辑部门详情数据=》回填数据
+    async getDeptDetil (id) {
+      const detail = await getDepartDetail(id)
+      // 回填数据
+      this.form = detail
+    },
     // 获取部门负责人列表
     async getPeoples () {
       const peoples = await getEmployeeSimple()
