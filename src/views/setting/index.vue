@@ -18,9 +18,13 @@
               <el-table-column prop="name" label="角色名称" width="240" />
               <el-table-column prop="description" label="描述" />
               <el-table-column label="操作">
-                <el-button size="small" type="success">分配权限</el-button>
-                <el-button size="small" type="primary">编辑</el-button>
-                <el-button size="small" type="danger">删除</el-button>
+                <template #default="{ row }">
+                  <el-button size="small" type="success">分配权限</el-button>
+                  <el-button size="small" type="primary">编辑</el-button>
+                  <el-button size="small" type="danger" @click="delRole(row)">
+                    删除
+                  </el-button>
+                </template>
               </el-table-column>
             </el-table>
             <!-- 分页组件 -->
@@ -50,7 +54,7 @@
 </template>
 
 <script>
-import { getRoleList } from '@/api/setting'
+import { getRoleList, deleteRole } from '@/api/setting'
 export default {
   data () {
     return {
@@ -68,6 +72,29 @@ export default {
     this.getList()
   },
   methods: {
+    // 删除角色
+    /**
+     * role 当前删除角色数据
+     */
+    async delRole (role) {
+      // console.log(role)
+      /**
+       * 思路：
+       * 1. 用户确认
+       * 2. 确认之后，调用接口删除
+       * 3. 刷新列表
+       * 4. 提示消息
+       */
+      try {
+        await this.$confirm(`确认删除${role.name}这个角色吗？`)
+        //  点击确认
+        await deleteRole(role.id)
+        this.getList()
+        this.$message.success('删除成功')
+      } catch (error) {
+        console.log(error)
+      }
+    },
     // 获取角色列表
     async getList () {
       const { rows, total } = await getRoleList(this.query)
