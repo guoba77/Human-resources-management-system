@@ -21,7 +21,15 @@
           v-model="form.manager"
           style="width: 80%"
           placeholder="请选择"
-        />
+        >
+          <!-- lable 选项显示什么  | value 存什么值 -->
+          <el-option
+            v-for="item in peoples"
+            :key="item.id"
+            :label="item.username"
+            :value="item.username"
+          ></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="部门介绍" prop="introduce">
         <el-input
@@ -42,6 +50,7 @@
 </template>
 
 <script>
+import { getEmployeeSimple } from '@/api/employees'
 export default {
   props: {
     // 父传子
@@ -53,6 +62,8 @@ export default {
   },
   data () {
     return {
+      // 部门负责人列表
+      peoples: [],
       // 表单数据
       form: {
         name: '', // 部门名称
@@ -80,7 +91,16 @@ export default {
       }
     }
   },
+  created () {
+    this.getPeoples()
+  },
   methods: {
+    // 获取部门负责人列表
+    async getPeoples () {
+      const peoples = await getEmployeeSimple()
+      console.log(peoples)
+      this.peoples = peoples
+    },
     // 关闭弹层执行
     close () {
       // console.log('弹层关闭了')
