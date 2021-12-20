@@ -76,6 +76,7 @@
     <AddDept
       :show-dialog="showDialog"
       :parent-dept="parentDept"
+      :all-depts="allDepts"
       @close-dialog="showDialog = $event"
       @refresh-dept="getTreeData"
     />
@@ -104,6 +105,8 @@ export default {
   data () {
     return {
       showDialog: false,
+      // 公司所有部门数据
+      allDepts: [],
       // 公司部门数据（树形结构）
       treeData: [],
       company: { name: '' }, // 公司信息
@@ -131,6 +134,7 @@ export default {
     async getTreeData () {
       const { depts, companyName } = await getDepartments()
       console.table(depts)
+      this.allDepts = depts
       // console.log(tranformTreeData(depts))
       this.treeData = tranformTreeData(depts)
       this.company.name = companyName

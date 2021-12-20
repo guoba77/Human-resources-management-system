@@ -60,13 +60,34 @@ export default {
       type: Boolean,
       default: false
     },
-    // 父部门数据
+    // 父部门数据=》复杂类型数据，要通过函数返回默认值
     parentDept: {
       type: Object,
       default: () => ({})
+      // default: () =>{
+      //   return {}
+      // }
+    },
+    //  所有部门数据
+    allDepts: {
+      type: Array,
+      default: () => []
     }
   },
   data () {
+    // 需求：新增部门，用户填写的编码要全局唯一
+    /**
+     * value 当前校验的表单值
+     * cb 控制校验是否通过：cb() 通过 | cb(new Error('错误提示信息'))
+     */
+    const validCode = (rule, value, cb) => {
+      if (this.allDepts.some(item => item.code === value)) {
+        // 重复
+        cb(new Error('部门编码重复了！'))
+      }
+      // 通过
+      cb()
+    }
     return {
       // 部门负责人列表
       peoples: [],
@@ -85,7 +106,8 @@ export default {
         ],
         code: [
           { required: true, message: '部门编码不能为空', trigger: ['blur', 'change'] },
-          { min: 1, max: 50, message: '部门编码要求1-50个字符', trigger: ['blur', 'change'] }
+          { min: 1, max: 50, message: '部门编码要求1-50个字符', trigger: ['blur', 'change'] },
+          { validator: validCode, trigger: 'blur' }
         ],
         manager: [
           { required: true, message: '部门负责人不能为空', trigger: ['blur', 'change'] }
