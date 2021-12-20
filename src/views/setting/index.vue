@@ -25,7 +25,13 @@
               <el-table-column label="操作">
                 <template #default="{ row }">
                   <el-button size="small" type="success">分配权限</el-button>
-                  <el-button size="small" type="primary">编辑</el-button>
+                  <el-button
+                    size="small"
+                    type="primary"
+                    @click="editRole(row.id)"
+                  >
+                    编辑
+                  </el-button>
                   <el-button size="small" type="danger" @click="delRole(row)">
                     删除
                   </el-button>
@@ -57,7 +63,7 @@
     </div>
     <!-- 新增|编辑角色 -->
     <el-dialog
-      title="新增角色"
+      :title="roleForm.id ? '编辑角色' : '新增角色'"
       :visible.sync="showDialog"
       width="50%"
       @close="close"
@@ -73,14 +79,16 @@
       </el-form>
       <span slot="footer">
         <el-button @click="showDialog = false">取消</el-button>
-        <el-button type="primary" @click="addRole">新增</el-button>
+        <el-button type="primary" @click="addRole">{{
+          roleForm.id ? "编辑角色" : "新增角色"
+        }}</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { getRoleList, deleteRole, addRole } from '@/api/setting'
+import { getRoleList, deleteRole, addRole, getRoleDetail, updateRole } from '@/api/setting'
 export default {
   data () {
     return {
@@ -124,6 +132,13 @@ export default {
       // 移除校验
       this.$refs.fm.resetFields()
     },
+    // 编辑角色
+    async editRole (id) {
+      const res = await getRoleDetail(id)
+      console.log(res)
+      this.roleForm = res
+      this.showDialog = true
+    },
     // 新增角色
     async addRole () {
       /**
@@ -136,7 +151,11 @@ export default {
        */
       try {
         await this.$refs.fm.validate()
-        await addRole(this.roleForm)
+        if (this.roleForm.id) {
+          await updateRole(this.roleForm)
+        } else {
+          await addRole(this.roleForm)
+        }
         // 重置页面为第一页
         this.query.page = 1
         this.getList()
