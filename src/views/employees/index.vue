@@ -12,7 +12,9 @@
             <template #right>
               <el-button type="primary" size="small">导入excel</el-button>
               <el-button type="primary" size="small">导出excel</el-button>
-              <el-button type="primary" size="small">新增员工</el-button>
+              <el-button type="primary" size="small" @click="showDialog = true">
+                新增员工
+              </el-button>
             </template>
           </PageTools>
         </template>
@@ -68,6 +70,16 @@
         </el-row>
       </el-card>
     </div>
+    <!-- 新增员工弹层 -->
+    <!-- <AddEmploy :show-dialog="showDialog" @close-dialog="showDialog = $event" />
+     -->
+    <!--
+       父传子.sync 作用：可以同步修改绑定的变量值
+       .sync语法糖：
+       1. 父传子=》:props.sync
+       2. 子传父=> 子组件中事件名=》update:props
+      -->
+    <AddEmploy :show-dialog.sync="showDialog" />
   </div>
 </template>
 
@@ -76,9 +88,15 @@ import { getEmployeeList, delEmployee } from '@/api/employees'
 // 导入数据字典
 import diction from '@/api/constant/employees'
 
+import AddEmploy from './components/add-employee.vue'
+
 export default {
+  components: {
+    AddEmploy
+  },
   data () {
     return {
+      showDialog: false,
       // 根据后台接口需要参数和返回数据
       qy: true,
       // 员工列表
