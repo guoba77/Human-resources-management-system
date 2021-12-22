@@ -10,3 +10,15 @@ export function getEmployeeSimple () {
     url: '/sys/user/simple'
   })
 }
+
+/**
+ * @description: 获取员工列表=》支持分页
+ * @param {*} params {page:当前页,size：每页条数}
+ * @return {*}
+ */
+export function getEmployeeList (params) {
+  return request({
+    url: '/sys/user',
+    params
+  })
+}
