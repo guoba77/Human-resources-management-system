@@ -51,7 +51,19 @@
           v-model="formData.departmentName"
           style="width: 50%"
           placeholder="请选择部门"
+          @focus="showDept = true"
         />
+        <!-- 需求：部门输入框获取焦点的时候，显示部门列表（可以选择） -->
+        <el-row v-show="showDept" class="selDept">
+          <!-- 关闭按钮 -->
+          <i class="el-icon-circle-close" @click="showDept = false"></i>
+          <el-tree
+            :data="treeData"
+            default-expand-all
+            :props="{ label: 'name' }"
+            @node-click="selDept"
+          ></el-tree>
+        </el-row>
       </el-form-item>
       <el-form-item label="转正时间" prop="correctionTime">
         <el-date-picker
@@ -71,6 +83,9 @@
 
 <script>
 import diction from '@/api/constant/employees'
+import { getDepartments } from '@/api/departments'
+// 导入树形转换方法
+import { tranformTreeData } from '@/utils'
 
 export default {
   props: {
@@ -81,6 +96,9 @@ export default {
   },
   data () {
     return {
+      showDept: false,
+      // 部门列表数据
+      treeData: [],
       // 聘用形式列表
       employList: diction.hireType,
       // 表单数据
@@ -118,6 +136,9 @@ export default {
       }
     }
   },
+  created () {
+    this.getTreeData()
+  },
   methods: {
     // 提交：新增员工
     async addEmploy () {
@@ -129,6 +150,20 @@ export default {
         console.log(error)
       }
     },
+    // 选择部门
+    selDept (dept) {
+      console.log('当前选择的部门：', dept)
+      // 1. 显示选择的部门名称到部门输入框中
+      this.formData.departmentName = dept.name
+      // 2. 关闭部门选择
+      this.showDept = false
+    },
+    // 获取部门数据
+    async getTreeData () {
+      const { depts } = await getDepartments()
+      // console.log(tranformTreeData(depts))
+      this.treeData = tranformTreeData(depts)
+    },
     // 关闭弹层执行
     close () {
       this.$emit('update:showDialog')
@@ -136,3 +171,19 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.selDept {
+  width: 280px;
+  border: 1px solid #eee;
+  position: relative;
+  .el-icon-circle-close {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    z-index: 10;
+    font-size: 18px;
+    color: #666;
+    cursor: pointer;
+  }
+}
+</style>
