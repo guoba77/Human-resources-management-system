@@ -39,10 +39,12 @@
           </el-table-column>
           <!-- 列规定 fixed属性 -->
           <el-table-column label="操作" fixed="right" width="280">
-            <template>
+            <template #default="{ row }">
               <el-button type="text" size="small">查看</el-button>
               <el-button type="text" size="small">分配角色</el-button>
-              <el-button type="text" size="small">删除</el-button>
+              <el-button type="text" size="small" @click="delEmploy(row)">
+                删除
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -70,7 +72,7 @@
 </template>
 
 <script>
-import { getEmployeeList } from '@/api/employees'
+import { getEmployeeList, delEmployee } from '@/api/employees'
 // 导入数据字典
 import diction from '@/api/constant/employees'
 
@@ -94,6 +96,32 @@ export default {
     this.getList()
   },
   methods: {
+    // 删除员工
+    async delEmploy (row) {
+      // console.log(row)
+      /**
+       * 1. 用户确认
+       * 2. 确认之后=》调用接口删除
+       * 3. 刷新列表
+       * 4. 提示
+       */
+      try {
+        await this.$confirm(`确认删除：${row.username}吗？`)
+        // 确定
+        await delEmployee(row.id)
+        // 处理最后一页数据全部删完后列表页码正确，但数据显示错误问题（刷新列表使用的是上次的页码）
+        // 解决：重新计算页码 => 总页码 = （数据总条数-1） / 每页条数
+        const newPage = Math.ceil((this.total - 1) / this.query.size)
+        if (this.query.page > newPage) {
+          // 纠正页码
+          this.query.page = newPage
+        }
+        this.getList()
+        this.$message.success('删除成功')
+      } catch (error) {
+        console.log(error)
+      }
+    },
     // 根据数据字典查询对应数字代表的含义（码值）
     // type: 1 正式  2 非正式
     formatFormOfEmployment (type) {
