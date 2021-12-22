@@ -4,7 +4,7 @@
       <el-card shadow="always" :body-style="{ padding: '20px' }">
         <!-- 页面title -->
         <template #header>
-          <span>员工管理</span>
+          <PageTools />
         </template>
         <!-- 页面的内容 -->
         <div>内容</div>
@@ -15,7 +15,9 @@
 
 <script>
 export default {
-
+  created () {
+    this.myfn()
+  }
 }
 </script>
 

@@ -23,11 +23,16 @@ import '@/permission' // permission control
 
 // 导入指令对象
 import * as dicts from '@/directives'
-console.log('指令对象：', dicts)
+
+// 导入自己写的插件
+import myPluninComponent from '@/components'
+// console.log('指令对象：', dicts)
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 Vue.use(ElementUI)
+
+Vue.use(myPluninComponent)
 
 Vue.config.productionTip = false
 
