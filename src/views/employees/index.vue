@@ -49,7 +49,16 @@
           align="middle"
           style="height: 60px"
         >
-          <el-pagination layout="prev, pager, next" />
+          <el-pagination
+            background
+            :total="total"
+            :current-page="query.page"
+            :page-size="query.size"
+            :page-sizes="[10, 2, 5]"
+            layout="prev, pager, next, sizes"
+            @current-change="changePage"
+            @size-change="changeSize"
+          />
         </el-row>
       </el-card>
     </div>
@@ -84,6 +93,27 @@ export default {
       console.log(rows)
       this.list = rows
       this.total = total
+    },
+    // 切换页码
+    changePage (page) {
+      // console.log(page)
+      // 根据新页码请求数据=》刷列表
+      /**
+       * 1. 更新页码
+       * 2. 刷列表
+       */
+      this.query.page = page
+      this.getList()
+    },
+    // 切换每页多少条数据
+    changeSize (size) {
+      // console.log(size)
+      /**
+       * 1. 更新每页条数
+       * 2. 刷列表
+       */
+      this.query.size = size
+      this.getList()
     }
   }
 }
