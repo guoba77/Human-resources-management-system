@@ -26,7 +26,11 @@
           <el-table-column type="index" label="序号" />
           <el-table-column prop="username" label="姓名" />
           <el-table-column prop="workNumber" label="工号" />
-          <el-table-column prop="formOfEmployment" label="聘用形式" />
+          <el-table-column label="聘用形式">
+            <template #default="{ row }">
+              {{ formatFormOfEmployment(row.formOfEmployment) }}
+            </template>
+          </el-table-column>
           <el-table-column prop="departmentName" label="部门" />
           <!-- sortable 开启手动排序 -->
           <el-table-column sortable prop="correctionTime" label="入职时间" />
@@ -67,6 +71,9 @@
 
 <script>
 import { getEmployeeList } from '@/api/employees'
+// 导入数据字典
+import diction from '@/api/constant/employees'
+
 export default {
   data () {
     return {
@@ -87,6 +94,22 @@ export default {
     this.getList()
   },
   methods: {
+    // 根据数据字典查询对应数字代表的含义（码值）
+    // type: 1 正式  2 非正式
+    formatFormOfEmployment (type) {
+      // console.log('数据字典：', diction)
+      /**
+       * 思路：
+       * 1. 生成映射关系map:{1:'正式',2:'非正式'}
+       * 2. 根据map获取对应码值
+       */
+      const map = {}
+      diction.hireType.forEach(item => {
+        map[item.id] = item.value
+      })
+      // 返回根据map获取到的码值，给模板渲染
+      return map[type]
+    },
     // 获取员工列表
     async getList () {
       const { rows, total } = await getEmployeeList(this.query)
