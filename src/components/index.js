@@ -5,6 +5,7 @@
  */
 // 导入要全局注册的组件
 import PageTools from './PageTools'
+// 导出插件
 export default {
   // Vue框架的构造函数
   install (Vue) {
