@@ -18,16 +18,22 @@
         </template>
         <!-- 页面的内容 -->
         <!-- table列表 -->
-        <el-table :border="true" :data="list">
+        <el-table
+          :border="true"
+          :data="list"
+          :default-sort="{ prop: 'workNumber', order: 'ascending' }"
+        >
           <el-table-column type="index" label="序号" />
           <el-table-column prop="username" label="姓名" />
           <el-table-column prop="workNumber" label="工号" />
           <el-table-column prop="formOfEmployment" label="聘用形式" />
           <el-table-column prop="departmentName" label="部门" />
-          <el-table-column prop="correctionTime" label="入职时间" />
+          <!-- sortable 开启手动排序 -->
+          <el-table-column sortable prop="correctionTime" label="入职时间" />
           <el-table-column label="账户状态">
             <el-switch v-model="qy" />
           </el-table-column>
+          <!-- 列规定 fixed属性 -->
           <el-table-column label="操作" fixed="right" width="280">
             <template>
               <el-button type="text" size="small">查看</el-button>
@@ -56,6 +62,7 @@ export default {
   data () {
     return {
       // 根据后台接口需要参数和返回数据
+      qy: true,
       // 员工列表
       list: [],
       // 分页参数
