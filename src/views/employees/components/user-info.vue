@@ -44,7 +44,12 @@
 
 <script>
 export default {
-
+  props: {
+    userDetail: {
+      type: Object,
+      default: () => ({})
+    }
+  }
 }
 </script>
 

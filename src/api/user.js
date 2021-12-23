@@ -26,7 +26,7 @@ export function getUserInfo () {
 }
 
 /**
- * @description: 获取用户头像
+ * @description: 获取用户头像（员工详情接口）
  * @param {*} id 用户id
  * @return {*}
  */
