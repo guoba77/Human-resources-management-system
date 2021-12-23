@@ -1,6 +1,8 @@
 <template>
   <div class="employees">
     <div class="app-container">
+      <!-- 测试 -->
+      <UploadExcel />
       <el-card shadow="always" :body-style="{ padding: '20px' }">
         <!-- 页面title -->
         <template #header>
