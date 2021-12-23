@@ -17,7 +17,14 @@
               >
                 导入excel
               </el-button>
-              <el-button type="primary" size="small">导出excel</el-button>
+              <el-button
+                :loading="downloadLoading"
+                type="primary"
+                size="small"
+                @click="exportData"
+              >
+                导出excel
+              </el-button>
               <el-button type="primary" size="small" @click="showDialog = true">
                 新增员工
               </el-button>
@@ -102,6 +109,7 @@ export default {
   },
   data () {
     return {
+      downloadLoading: false,
       showDialog: false,
       // 根据后台接口需要参数和返回数据
       qy: true,
@@ -120,6 +128,27 @@ export default {
     this.getList()
   },
   methods: {
+    // 导出某一页员工数据为Excel下载保存到本地电脑
+    async exportData () {
+      // 开启loading=》开始导出
+      this.downloadLoading = true
+      // 异步导入模块语法：import('js模块的路径') =》返回Promise对象
+      const excel = await import('@/utils/Export2Excel')
+      console.log('模块导入的方法：', excel)
+      // const tHeader = ['Id', 'Title', 'Author', 'Readings', 'Date']
+      //   const filterVal = ['id', 'title', 'author', 'pageviews', 'display_time']
+      //   const list = this.list
+      //   const data = this.formatJson(filterVal, list)
+      //   excel.export_json_to_excel({
+      //     header: tHeader,
+      //     data,
+      //     filename: this.filename,
+      //     autoWidth: this.autoWidth,
+      //     bookType: this.bookType
+      //   })
+      // 关闭loading=》导出结束
+      this.downloadLoading = false
+    },
     // 删除员工
     async delEmploy (row) {
       // console.log(row)
