@@ -188,7 +188,12 @@ export default {
         for (const key in item) {
           if (filterKeys.includes(key)) {
             // 在映射关系中=》说明是需要导出的属性
-            userInfo.push(item[key])
+            if (key === 'formOfEmployment') {
+              // 对聘用形式1和2做格式化
+              userInfo.push(this.formatFormOfEmployment(item[key]))
+            } else {
+              userInfo.push(item[key])
+            }
           }
         }
         secondArray.push(userInfo)
