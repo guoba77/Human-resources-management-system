@@ -19,6 +19,7 @@ export default {
     // 注册全局组件
     // Vue.component('PageTools', PageTools)
     // Vue.component('UploadExcel', UploadExcel)
+    // 2. 循环数据批量注册多个组件
     cps.forEach(cp => {
       // cp.name 作为注册组件的标签名
       Vue.component(cp.name, cp)
