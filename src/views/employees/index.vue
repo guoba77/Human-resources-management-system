@@ -1,8 +1,6 @@
 <template>
   <div class="employees">
     <div class="app-container">
-      <!-- 测试 -->
-      <UploadExcel />
       <el-card shadow="always" :body-style="{ padding: '20px' }">
         <!-- 页面title -->
         <template #header>
@@ -12,7 +10,13 @@
               <span>总计{{ total }}条数据</span>
             </template>
             <template #right>
-              <el-button type="primary" size="small">导入excel</el-button>
+              <el-button
+                type="primary"
+                size="small"
+                @click="$router.push('/import')"
+              >
+                导入excel
+              </el-button>
               <el-button type="primary" size="small">导出excel</el-button>
               <el-button type="primary" size="small" @click="showDialog = true">
                 新增员工

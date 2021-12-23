@@ -69,6 +69,16 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
+  // 员工导入
+  {
+    path: '/import',
+    component: Layout,
+    hidden: true, // 不显示到菜单
+    children: [{
+      path: '',
+      component: () => import('@/views/import')
+    }]
+  },
   // 首页
   {
     path: '/',

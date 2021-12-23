@@ -13,7 +13,7 @@
       @dragover="handleDragover"
       @dragenter="handleDragover"
     >
-      Drop excel file here or
+      拖放excel文件到这里
       <el-button
         :loading="loading"
         style="margin-left: 16px"
@@ -21,7 +21,7 @@
         type="primary"
         @click="handleUpload"
       >
-        Browse
+        选择Excel文件
       </el-button>
     </div>
   </div>
