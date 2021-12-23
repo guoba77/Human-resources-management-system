@@ -135,17 +135,23 @@ export default {
       // 异步导入模块语法：import('js模块的路径') =》返回Promise对象
       const excel = await import('@/utils/Export2Excel')
       console.log('模块导入的方法：', excel)
-      // const tHeader = ['Id', 'Title', 'Author', 'Readings', 'Date']
-      //   const filterVal = ['id', 'title', 'author', 'pageviews', 'display_time']
-      //   const list = this.list
-      //   const data = this.formatJson(filterVal, list)
-      //   excel.export_json_to_excel({
-      //     header: tHeader,
-      //     data,
-      //     filename: this.filename,
-      //     autoWidth: this.autoWidth,
-      //     bookType: this.bookType
-      //   })
+      const header = ['姓名', '性别', '工资']
+      const data = [
+        // 第一条数据
+        ['刘备', '男', 30000],
+        // 第二条数据
+        ['关羽', '男', 20000],
+        // 第三条数据
+        ['张飞', '男', 10000]
+
+      ]
+      excel.export_json_to_excel({
+        header, // 导出excel数据表头（数组）
+        data, // 导出具体数据（二维数组）
+        filename: `第${this.query.page}页员工数据`, // 导出文件名
+        autoWidth: true, // cell宽度是否自适应
+        bookType: 'xlsx' // 导出文件格式
+      })
       // 关闭loading=》导出结束
       this.downloadLoading = false
     },
