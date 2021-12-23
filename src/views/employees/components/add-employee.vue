@@ -83,9 +83,10 @@
 
 <script>
 import diction from '@/api/constant/employees'
+import { addEmployee } from '@/api/employees'
 import { getDepartments } from '@/api/departments'
 // 导入树形转换方法
-import { tranformTreeData } from '@/utils'
+import { tranformTreeData, parseTime } from '@/utils'
 
 export default {
   props: {
@@ -146,6 +147,21 @@ export default {
         await this.$refs.addForm.validate()
         // 校验通过
         console.log('校验通过')
+        /**
+         * 思路：
+         * 1. 格式化入职时间和转正事件
+         * 2. 调用接口新增员工
+         * 3. 刷新列表
+         * 4. 关闭弹层和提示
+         */
+        this.formData.timeOfEntry = parseTime(this.formData.timeOfEntry, '{y}-{m}-{d}')
+        this.formData.correctionTime = parseTime(this.formData.correctionTime, '{y}-{m}-{d}')
+        await addEmployee(this.formData)
+        // 刷新列表=》1. 子传父  2. this.$parent => 获取父组件实例（可以调用实例上的方法）
+        console.log('父组件实例：', this.$parent)
+        this.$parent.getList()
+        this.$emit('update:showDialog')
+        this.$message.success('新增成功')
       } catch (error) {
         console.log(error)
       }
