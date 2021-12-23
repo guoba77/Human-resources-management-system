@@ -183,6 +183,8 @@ export default {
     // 关闭弹层执行
     close () {
       this.$emit('update:showDialog')
+      // 重置表单校验和数据
+      this.$refs.addForm.resetFields()
     }
   }
 }
