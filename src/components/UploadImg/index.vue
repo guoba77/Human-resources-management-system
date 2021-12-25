@@ -23,6 +23,15 @@
 </template>
 
 <script>
+// 1. 导入腾讯云cos云sdk方法构造函数
+import Cos from 'cos-js-sdk-v5'
+// SECRETID 和 SECRETKEY请登录 https://console.cloud.tencent.com/cam/capi 进行查看和管理
+// 2. 初始化得到云cos操作图片上传的实例
+const cos = new Cos({
+  SecretId: 'AKIDNHyR3QTP7mJhUoJERRGvPh0BB2WP9g6M',
+  SecretKey: 'HD0znQcaKn5zeplWliS3ZM2RCjAg2BUa'
+})
+console.log('云cos操作图片上传的实例:', cos)
 export default {
   name: 'UploadImg',
   data () {
