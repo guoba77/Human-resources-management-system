@@ -19,6 +19,14 @@
     <img v-if="imageUrl" :src="imageUrl" class="avatar" />
     <!-- 默认显示+号图标 -->
     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+    <!-- 上传进度条 -->
+    <el-progress
+      v-show="isShow"
+      type="line"
+      :percentage="percent"
+      status="success"
+      :stroke-width="6"
+    ></el-progress>
   </el-upload>
 </template>
 
@@ -36,6 +44,9 @@ export default {
   name: 'UploadImg',
   data () {
     return {
+      isShow: false,
+      // 图片上传进度(0-100)
+      percent: 0,
       // 上传成功之后存储的图片地址
       imageUrl: ''
     }
@@ -44,6 +55,8 @@ export default {
     // 自定义上传的回调函数
     // file 图片的文件对象
     upload ({ file }) {
+      // 1. 显示进度条
+      this.isShow = true
       // console.log('开始上传：', file)
       // 自己处理上传逻辑（发请求）=》调用腾讯云提供的（SDK）方法
       cos.putObject({
@@ -55,7 +68,8 @@ export default {
         // progressData 图片上传进度数据
         onProgress: (progressData) => {
           // 上传完成之前一直执行=》会把图片的上传进度返回给前端=》0.1 0.2... 1
-          console.log(JSON.stringify(progressData))
+          // 把读取的进度值progressData.percent 转换成 0 - 100形式
+          this.percent = progressData.percent * 100
         }
       }, (err, data) => {
         // 1. err 如果上传失败会返回错误信息（如果上传成功err的值null）
@@ -64,7 +78,13 @@ export default {
         if (!err) {
           // 上传成功了
           console.log('上传成功：', data)
-          this.imageUrl = `https://${data.Location}`
+          // 通过定时器=》显示图片上传进度效果
+          setTimeout(() => {
+            this.imageUrl = `https://${data.Location}`
+            // 关闭进度条显示
+            this.percent = 0
+            this.isShow = false
+          }, 600)
         }
       })
     },
