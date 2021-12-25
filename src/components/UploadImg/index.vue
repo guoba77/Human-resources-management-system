@@ -23,7 +23,7 @@
 </template>
 
 <script>
-// 1. 导入腾讯云cos云sdk方法构造函数
+// 1. 导入腾讯云cos云sdk构造函数
 import Cos from 'cos-js-sdk-v5'
 // SECRETID 和 SECRETKEY请登录 https://console.cloud.tencent.com/cam/capi 进行查看和管理
 // 2. 初始化得到云cos操作图片上传的实例
@@ -42,9 +42,31 @@ export default {
   },
   methods: {
     // 自定义上传的回调函数
-    upload (params) {
-      console.log('开始上传：', params)
+    // file 图片的文件对象
+    upload ({ file }) {
+      // console.log('开始上传：', file)
       // 自己处理上传逻辑（发请求）=》调用腾讯云提供的（SDK）方法
+      cos.putObject({
+        Bucket: 'hr-1255477649', /* 填入您自己的存储桶，必须字段 */
+        Region: 'ap-beijing', /* 存储桶所在地域，例如ap-beijing，必须字段 */
+        Key: file.name, /* 存储在桶里的对象键（例如1.jpg，a/b/test.txt），必须字段 */
+        StorageClass: 'STANDARD', // 存储模式=》标准模式
+        Body: file, // 上传文件对象
+        // progressData 图片上传进度数据
+        onProgress: (progressData) => {
+          // 上传完成之前一直执行=》会把图片的上传进度返回给前端=》0.1 0.2... 1
+          console.log(JSON.stringify(progressData))
+        }
+      }, (err, data) => {
+        // 1. err 如果上传失败会返回错误信息（如果上传成功err的值null）
+        // 2. data 上传成功服务器返回的图片数据
+        // 注意：回调函数要写成箭头函数，才能成功获取组件实例this
+        if (!err) {
+          // 上传成功了
+          console.log('上传成功：', data)
+          this.imageUrl = `https://${data.Location}`
+        }
+      })
     },
     // 上传之前对图片大小和格式做校验
     beforeAvatarUpload (file) {
