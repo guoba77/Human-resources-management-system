@@ -18,6 +18,13 @@
         <el-button>返回</el-button>
       </el-form-item>
     </el-form>
+    <!-- 测试 -->
+    <ul>
+      <li>{{ count }}</li>
+      <li @click="cg">add</li>
+      <li>{{ obj }}</li>
+      <li @click="changeObj">修改小红年龄</li>
+    </ul>
   </div>
 </template>
 
@@ -27,7 +34,22 @@ import { saveUserDetailById } from '@/api/employees'
 export default {
   props: {
     // 表单数据
+    /**
+     * 单向数据流（定义：数据的传递和修改都是单向（不可逆））=》场景：父子通信
+     * 注意：
+     * 父组件传递给子组件的数据正常来说只能在父组件修改
+     * 1. 父传子是简单类型（string、boolean等），只能在父组件修改（子传父）
+     * 2. 父传子是复杂类型（object、array等），可以在子组件局部修改，但是不能改地址
+     */
     userDetail: {
+      type: Object,
+      default: () => ({})
+    },
+    count: {
+      type: Number,
+      default: 0
+    },
+    obj: {
       type: Object,
       default: () => ({})
     }
@@ -40,6 +62,15 @@ export default {
     }
   },
   methods: {
+    cg () {
+      this.$emit('change-count')
+    },
+    changeObj () {
+      // 1. 可以局部修改（部分数据）
+      // this.obj.age++
+      // 2. 修改地址
+      this.obj = { age: 10 }
+    },
     // 提交：存储用户名
     async updateUser () {
       try {

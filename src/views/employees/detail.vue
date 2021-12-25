@@ -6,7 +6,12 @@
         <el-tabs>
           <el-tab-pane label="登录账户设置">
             <!-- 账户设置 -->
-            <LoginSet :user-detail="userDetail" />
+            <LoginSet
+              :user-detail="userDetail"
+              :count="count"
+              :obj="obj"
+              @change-count="add"
+            />
           </el-tab-pane>
           <el-tab-pane label="个人详情">
             <!-- 个人详情=> 头像上传（上云） -->
@@ -30,7 +35,15 @@ export default {
   data () {
     return {
       // 员工详情数据
-      userDetail: {}
+      userDetail: {},
+      // 父组件数据
+      // 简单类型
+      count: 0,
+      // 复杂类型
+      obj: {
+        name: '小红',
+        age: 18
+      }
     }
   },
   created () {
@@ -43,6 +56,9 @@ export default {
       const userDetail = await getUserDetailById(this.$route.params.id)
       console.log('员工详情：', userDetail)
       this.userDetail = userDetail
+    },
+    add () {
+      this.count++
     }
   }
 }
