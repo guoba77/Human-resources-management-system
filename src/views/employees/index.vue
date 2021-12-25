@@ -40,6 +40,16 @@
         >
           <el-table-column type="index" label="序号" />
           <el-table-column prop="username" label="姓名" />
+          <!-- 显示员工头像 -->
+          <el-table-column label="头像">
+            <template #default="{ row }">
+              <el-image
+                class="photo"
+                :src="row.staffPhoto"
+                fit="cover"
+              ></el-image>
+            </template>
+          </el-table-column>
           <el-table-column prop="workNumber" label="工号" />
           <el-table-column label="聘用形式">
             <template #default="{ row }">
@@ -282,4 +292,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+}
 </style>
