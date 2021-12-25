@@ -6,9 +6,10 @@
 // 导入要全局注册的组件
 import PageTools from './PageTools'
 import UploadExcel from './UploadExcel'
+import UploadImg from './UploadImg'
 
 // 1. 准备数组=》存放被注册的组件
-const cps = [PageTools, UploadExcel]
+const cps = [PageTools, UploadExcel, UploadImg]
 console.log(1, cps)
 //
 // 导出插件

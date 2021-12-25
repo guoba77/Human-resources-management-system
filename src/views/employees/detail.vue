@@ -3,8 +3,8 @@
     <div class="app-container">
       <el-card>
         <!-- 标签页组件 -->
-        <el-tabs>
-          <el-tab-pane label="登录账户设置">
+        <el-tabs v-model="currSel">
+          <el-tab-pane name="account" label="登录账户设置">
             <!-- 账户设置 -->
             <LoginSet
               :user-detail="userDetail"
@@ -13,7 +13,7 @@
               @change-count="add"
             />
           </el-tab-pane>
-          <el-tab-pane label="个人详情">
+          <el-tab-pane name="detail" label="个人详情">
             <!-- 个人详情=> 头像上传（上云） -->
             <UserInfo :user-detail="userDetail" />
           </el-tab-pane>
@@ -34,6 +34,8 @@ export default {
   },
   data () {
     return {
+      // 当前选中的页签
+      currSel: 'detail',
       // 员工详情数据
       userDetail: {},
       // 父组件数据

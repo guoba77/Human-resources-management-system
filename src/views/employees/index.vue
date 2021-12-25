@@ -48,7 +48,7 @@
           </el-table-column>
           <el-table-column prop="departmentName" label="部门" />
           <!-- sortable 开启手动排序 -->
-          <el-table-column sortable prop="correctionTime" label="入职时间" />
+          <el-table-column sortable prop="timeOfEntry" label="入职时间" />
           <el-table-column label="账户状态">
             <el-switch v-model="qy" />
           </el-table-column>
