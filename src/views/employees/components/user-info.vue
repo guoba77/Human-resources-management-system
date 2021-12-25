@@ -36,7 +36,7 @@
         <el-col :span="12">
           <el-form-item label="员工头像">
             <!-- 放置上传图片 -->
-            <UploadImg />
+            <UploadImg :src.sync="userDetail.staffPhoto" />
             <!-- <el-image :src="userDetail.staffPhoto"></el-image> -->
           </el-form-item>
         </el-col>

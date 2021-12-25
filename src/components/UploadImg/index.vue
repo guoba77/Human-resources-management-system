@@ -16,7 +16,7 @@
     :before-upload="beforeAvatarUpload"
   >
     <!-- 上传成功之后，做回显 -->
-    <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+    <img v-if="src" :src="src" class="avatar" />
     <!-- 默认显示+号图标 -->
     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     <!-- 上传进度条 -->
@@ -42,13 +42,20 @@ const cos = new Cos({
 console.log('云cos操作图片上传的实例:', cos)
 export default {
   name: 'UploadImg',
+  props: {
+    // 员工头像地址
+    src: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       isShow: false,
       // 图片上传进度(0-100)
-      percent: 0,
+      percent: 0
       // 上传成功之后存储的图片地址
-      imageUrl: ''
+      // imageUrl: ''
     }
   },
   methods: {
@@ -80,7 +87,9 @@ export default {
           console.log('上传成功：', data)
           // 通过定时器=》显示图片上传进度效果
           setTimeout(() => {
-            this.imageUrl = `https://${data.Location}`
+            // this.imageUrl = `https://${data.Location}`
+            // 修改父组件src地址数据
+            this.$emit('update:src', `https://${data.Location}`)
             // 关闭进度条显示
             this.percent = 0
             this.isShow = false
