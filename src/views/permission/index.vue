@@ -26,14 +26,14 @@
               >
                 添加
               </el-button>
-              <el-button type="text">编辑</el-button>
+              <el-button type="text" @click="openEdit(row.id)">编辑</el-button>
               <el-button type="text" @click="delPerm(row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-card>
     </div>
-    <!-- 新增权限点弹层 -->
+    <!-- 新增/编辑权限点弹层 -->
     <el-dialog :visible.sync="showDialog" title="弹层标题" @close="close">
       <el-form ref="fm" label-width="100px" :model="formData" :rules="rules">
         <el-form-item label="权限名称" prop="name">
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { getPermissionList, addPermission, delPermission } from '@/api/permisson'
+import { getPermissionList, updatePermission, addPermission, delPermission, getPermissionDetail } from '@/api/permisson'
 // 导入转换树形结构方法
 import { tranformTreeData } from '@/utils'
 export default {
@@ -118,23 +118,37 @@ export default {
         console.log(error)
       }
     },
-    // 提交：新增权限
+    // 提交：新增 | 编辑权限
     async addPerm () {
       try {
         await this.$refs.fm.validate()
         // 校验通过=》调用接口
-        await addPermission(this.formData)
+        if (this.formData.id) {
+          // 编辑
+          await updatePermission(this.formData)
+        } else {
+          // 新增
+          await addPermission(this.formData)
+        }
         this.getList()
         this.showDialog = false
-        this.$message.success(`添加：${this.formData.type === 1 ? '页面访问权限' : '页面下按钮权限'}成功！`)
+        this.$message.success(`操作：${this.formData.type === 1 ? '页面访问权限' : '页面下按钮权限'}成功！`)
         console.log('ok')
       } catch (error) {
         console.log(error)
       }
     },
-    // type 权限分类   pid 权限父节点 （'0' 页面权限 |  具体ID 页面下按钮权限）
+    // 打开编辑：回填数据
+    async openEdit (id) {
+      this.showDialog = true
+      // 回填数据
+      const detail = await getPermissionDetail(id)
+      this.formData = detail
+    },
+    // 打开新增：type 权限分类   pid 权限父节点 （'0' 页面权限 |  具体ID 页面下按钮权限）
     openAdd (type, pid) {
       this.showDialog = true
+      // 区分？打开的是新增还是编辑权限点=》
       // 打开弹层=》新增的是那种类型的权限点数据
       this.formData.type = type
       this.formData.pid = pid
