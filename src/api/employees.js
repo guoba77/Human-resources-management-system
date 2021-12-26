@@ -12,6 +12,19 @@ export function getEmployeeSimple () {
 }
 
 /**
+ * @description: 为用户分配角色
+ * @param {*} data { id:当前用户id, roleIds:选中的角色id组成的数组 }
+ * @return {*}
+ */
+export function assignRoles (data) {
+  return request({
+    url: '/sys/user/assignRoles',
+    data,
+    method: 'put'
+  })
+}
+
+/**
  * @description: 获取员工列表=》支持分页
  * @param {*} params {page:当前页,size：每页条数}
  * @return {*}

@@ -15,7 +15,9 @@
       <el-checkbox label="115">人事</el-checkbox> -->
     </el-checkbox-group>
     <template #footer>
-      <el-button type="primary" size="small">确定</el-button>
+      <el-button type="primary" size="small" @click="assingRole">
+        确定
+      </el-button>
       <el-button size="small" @click="$emit('update:showRoleDialog')">
         取消
       </el-button>
@@ -26,6 +28,7 @@
 <script>
 import { getRoleList } from '@/api/setting'
 import { getUserDetailById } from '@/api/user'
+import { assignRoles } from '@/api/employees'
 export default {
   name: 'Ar',
   props: {
@@ -39,19 +42,33 @@ export default {
       // 角色列表
       roleList: [],
       // 选中的角色ID的数组
-      roleIds: []
+      roleIds: [],
+      // 员工ID
+      userId: null
     }
   },
   created () {
     this.getRoleList()
   },
   methods: {
+    // 给员工分配角色
+    async assingRole () {
+      try {
+        await assignRoles({ id: this.userId, roleIds: this.roleIds })
+        this.$emit('update:showRoleDialog')
+        this.$message.success('分配成功')
+      } catch (error) {
+        console.log(error)
+      }
+    },
     // 查询用户之前分配过的角色=》回显
     // 用户id
     async getUserRoles (id) {
       const { roleIds } = await getUserDetailById(id)
       // 回显
       this.roleIds = roleIds
+      // 存储用户ID
+      this.userId = id
     },
     // 获取角色列表
     async getRoleList () {
