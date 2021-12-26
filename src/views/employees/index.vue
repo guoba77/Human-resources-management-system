@@ -73,7 +73,9 @@
               >
                 查看
               </el-button>
-              <el-button type="text" size="small">分配角色</el-button>
+              <el-button type="text" size="small" @click="openAssingRole">
+                分配角色
+              </el-button>
               <el-button type="text" size="small" @click="delEmploy(row)">
                 删除
               </el-button>
@@ -112,6 +114,8 @@
     <AddEmploy :show-dialog.sync="showDialog" />
     <!-- 员工头像二维码 -->
     <QrCode ref="qr" :show-code.sync="showCode" />
+    <!-- 给员工分配角色 -->
+    <AssignRole :show-role-dialog.sync="showRoleDialog" />
   </div>
 </template>
 
@@ -124,14 +128,18 @@ import AddEmploy from './components/add-employee.vue'
 
 // 员工头像二维码弹层
 import QrCode from './components/qr-code.vue'
+// 导入给员工分配角色弹层
+import AssignRole from './components/assign-role.vue'
 
 export default {
   components: {
     AddEmploy,
-    QrCode
+    QrCode,
+    AssignRole
   },
   data () {
     return {
+      showRoleDialog: false,
       showCode: false,
       downloadLoading: false,
       showDialog: false,
@@ -152,6 +160,10 @@ export default {
     this.getList()
   },
   methods: {
+    // 打开分配角色弹层
+    openAssingRole () {
+      this.showRoleDialog = true
+    },
     // 打开头像二维码弹层
     openCode (url) {
       // 1. 打开弹层
