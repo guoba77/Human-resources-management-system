@@ -5,7 +5,8 @@
         <div slot="header">
           <el-row type="flex" justify="space-between" align="middle">
             <span>权限管理</span>
-            <el-button type="primary">添加权限</el-button>
+            <!-- 1. 增加页面访问权限点 -->
+            <el-button type="primary" @click="openAdd()">添加权限</el-button>
           </el-row>
         </div>
         <!-- card body -->
@@ -15,7 +16,10 @@
           <el-table-column prop="description" label="描述" />
           <el-table-column label="操作">
             <template #default="{ row }">
-              <el-button v-if="row.type === 1" type="text">添加</el-button>
+              <!-- 2. 页面下按钮操作权限点 -->
+              <el-button v-if="row.type === 1" type="text" @click="openAdd()">
+                添加
+              </el-button>
               <el-button type="text">编辑</el-button>
               <el-button type="text">删除</el-button>
             </template>
@@ -23,6 +27,39 @@
         </el-table>
       </el-card>
     </div>
+    <!-- 新增权限点弹层 -->
+    <el-dialog
+      :visible.sync="showDialog"
+      title="弹层标题"
+      @close="showDialog = false"
+    >
+      <el-form ref="fm" label-width="100px" :model="formData" :rules="rules">
+        <el-form-item label="权限名称" prop="name">
+          <el-input v-model="formData.name" />
+        </el-form-item>
+        <el-form-item label="权限标识" prop="code">
+          <el-input v-model="formData.code" />
+        </el-form-item>
+        <el-form-item label="权限描述">
+          <el-input v-model="formData.description" />
+        </el-form-item>
+        <el-form-item label="权限启用">
+          <el-switch
+            v-model="formData.enVisible"
+            active-text="启用"
+            active-value="1"
+            inactive-text="不启用"
+            inactive-value="0"
+          />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <div style="text-align: right">
+          <el-button @click="showDialog = false">取消</el-button>
+          <el-button type="primary" @click="addPerm">确定</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -36,13 +73,41 @@ export default {
       // 权限点列表
       // 权限点数据分类：1. 页面访问权限（父）  2. 页面下功能（按钮）操作权限（子）
       // 后续做权限控制，也是基于以上两种分类权限数据做控制
-      list: []
+      list: [],
+      showDialog: false,
+      // 表单数据
+      formData: {
+        enVisible: '0', // '1' 开启  '0' 不开启
+        name: '', // 名称
+        code: '', // 权限标识
+        description: '', // 描述
+        type: '', // 类型
+        pid: '' // 添加到哪个节点下
+      },
+      // 校验规则
+      rules: {
+        name: [{ required: true, message: '权限点名称不能为空', trigger: 'blur' }],
+        code: [{ required: true, message: '权限点标识不能为空', trigger: 'blur' }]
+      }
     }
   },
   created () {
     this.getList()
   },
   methods: {
+    // 提交：新增权限
+    async addPerm () {
+      try {
+        await this.$refs.fm.validate()
+        // 校验通过=》调用接口
+        console.log('ok')
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    openAdd () {
+      this.showDialog = true
+    },
     //  获取权限点列表数据
     async getList () {
       const list = await getPermissionList()
