@@ -27,7 +27,7 @@
                 添加
               </el-button>
               <el-button type="text">编辑</el-button>
-              <el-button type="text">删除</el-button>
+              <el-button type="text" @click="delPerm(row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { getPermissionList, addPermission } from '@/api/permisson'
+import { getPermissionList, addPermission, delPermission } from '@/api/permisson'
 // 导入转换树形结构方法
 import { tranformTreeData } from '@/utils'
 export default {
@@ -97,6 +97,27 @@ export default {
     this.getList()
   },
   methods: {
+    // 删除权限点
+    async delPerm (row) {
+      /**
+       * 思路：
+       * 1. 用户确认
+       * 2. 确认后=》如果是页面访问权限，下边有子（不能删除）=》调用接口删除
+       * 3. 刷新列表
+       */
+      try {
+        await this.$confirm(`确认删除:${row.name}权限吗？`)
+        // 如果是页面访问权限，下边有子（不能删除）
+        if (row.children && row.children.length > 0) {
+          return this.$message.error('页面权限下有功能点权限，不能删除！')
+        }
+        await delPermission(row.id)
+        this.getList()
+        this.$message.success('删除成功')
+      } catch (error) {
+        console.log(error)
+      }
+    },
     // 提交：新增权限
     async addPerm () {
       try {
