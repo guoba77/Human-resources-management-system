@@ -6,7 +6,9 @@
           <el-row type="flex" justify="space-between" align="middle">
             <span>权限管理</span>
             <!-- 1. 增加页面访问权限点 -->
-            <el-button type="primary" @click="openAdd()">添加权限</el-button>
+            <el-button type="primary" @click="openAdd(1, '0')">
+              添加权限
+            </el-button>
           </el-row>
         </div>
         <!-- card body -->
@@ -17,7 +19,11 @@
           <el-table-column label="操作">
             <template #default="{ row }">
               <!-- 2. 页面下按钮操作权限点 -->
-              <el-button v-if="row.type === 1" type="text" @click="openAdd()">
+              <el-button
+                v-if="row.type === 1"
+                type="text"
+                @click="openAdd(2, row.id)"
+              >
                 添加
               </el-button>
               <el-button type="text">编辑</el-button>
@@ -28,11 +34,7 @@
       </el-card>
     </div>
     <!-- 新增权限点弹层 -->
-    <el-dialog
-      :visible.sync="showDialog"
-      title="弹层标题"
-      @close="showDialog = false"
-    >
+    <el-dialog :visible.sync="showDialog" title="弹层标题" @close="close">
       <el-form ref="fm" label-width="100px" :model="formData" :rules="rules">
         <el-form-item label="权限名称" prop="name">
           <el-input v-model="formData.name" />
@@ -64,7 +66,7 @@
 </template>
 
 <script>
-import { getPermissionList } from '@/api/permisson'
+import { getPermissionList, addPermission } from '@/api/permisson'
 // 导入转换树形结构方法
 import { tranformTreeData } from '@/utils'
 export default {
@@ -81,8 +83,8 @@ export default {
         name: '', // 名称
         code: '', // 权限标识
         description: '', // 描述
-        type: '', // 类型
-        pid: '' // 添加到哪个节点下
+        type: '', // 类型=> 权限类型 1-页面访问 | 2-页面下功能
+        pid: '' // 添加到哪个节点下=>'0'代表是页面权限 | '604f7df5f900be1850edb152'代表页面下功能权限
       },
       // 校验规则
       rules: {
@@ -100,13 +102,33 @@ export default {
       try {
         await this.$refs.fm.validate()
         // 校验通过=》调用接口
+        await addPermission(this.formData)
+        this.getList()
+        this.showDialog = false
+        this.$message.success(`添加：${this.formData.type === 1 ? '页面访问权限' : '页面下按钮权限'}成功！`)
         console.log('ok')
       } catch (error) {
         console.log(error)
       }
     },
-    openAdd () {
+    // type 权限分类   pid 权限父节点 （'0' 页面权限 |  具体ID 页面下按钮权限）
+    openAdd (type, pid) {
       this.showDialog = true
+      // 打开弹层=》新增的是那种类型的权限点数据
+      this.formData.type = type
+      this.formData.pid = pid
+    },
+    // 关闭弹层执行
+    close () {
+      this.formData = {
+        enVisible: '0', // '1' 开启  '0' 不开启
+        name: '', // 名称
+        code: '', // 权限标识
+        description: '', // 描述
+        type: '', // 类型=> 权限类型 1-页面访问 | 2-页面下功能
+        pid: '' // 添加到哪个节点下=>'0'代表是页面权限 | '604f7df5f900be1850edb152'代表页面下功能权限
+      }
+      this.$refs.fm.resetFields()
     },
     //  获取权限点列表数据
     async getList () {
