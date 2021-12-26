@@ -47,7 +47,7 @@
                 class="photo"
                 :src="row.staffPhoto"
                 fit="cover"
-                @click="openCode"
+                @click="openCode(row.staffPhoto)"
               ></el-image>
             </template>
           </el-table-column>
@@ -111,7 +111,7 @@
       -->
     <AddEmploy :show-dialog.sync="showDialog" />
     <!-- 员工头像二维码 -->
-    <QrCode :show-code.sync="showCode" />
+    <QrCode ref="qr" :show-code.sync="showCode" />
   </div>
 </template>
 
@@ -153,8 +153,11 @@ export default {
   },
   methods: {
     // 打开头像二维码弹层
-    openCode () {
+    openCode (url) {
+      // 1. 打开弹层
       this.showCode = true
+      // 2. 调用子组件中draw方法绘制二维码
+      this.$refs.qr.draw(url)
     },
     // 导出某一页员工数据为Excel下载保存到本地电脑
     async exportData () {
