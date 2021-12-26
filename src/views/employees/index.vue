@@ -47,6 +47,7 @@
                 class="photo"
                 :src="row.staffPhoto"
                 fit="cover"
+                @click="openCode"
               ></el-image>
             </template>
           </el-table-column>
@@ -109,6 +110,8 @@
        2. 子传父=> 子组件中事件名=》update:props
       -->
     <AddEmploy :show-dialog.sync="showDialog" />
+    <!-- 员工头像二维码 -->
+    <QrCode :show-code.sync="showCode" />
   </div>
 </template>
 
@@ -119,12 +122,17 @@ import diction from '@/api/constant/employees'
 
 import AddEmploy from './components/add-employee.vue'
 
+// 员工头像二维码弹层
+import QrCode from './components/qr-code.vue'
+
 export default {
   components: {
-    AddEmploy
+    AddEmploy,
+    QrCode
   },
   data () {
     return {
+      showCode: false,
       downloadLoading: false,
       showDialog: false,
       // 根据后台接口需要参数和返回数据
@@ -144,6 +152,10 @@ export default {
     this.getList()
   },
   methods: {
+    // 打开头像二维码弹层
+    openCode () {
+      this.showCode = true
+    },
     // 导出某一页员工数据为Excel下载保存到本地电脑
     async exportData () {
       // 开启loading=》开始导出
