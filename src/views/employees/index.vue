@@ -73,7 +73,11 @@
               >
                 查看
               </el-button>
-              <el-button type="text" size="small" @click="openAssingRole">
+              <el-button
+                type="text"
+                size="small"
+                @click="openAssingRole(row.id)"
+              >
                 分配角色
               </el-button>
               <el-button type="text" size="small" @click="delEmploy(row)">
@@ -115,7 +119,7 @@
     <!-- 员工头像二维码 -->
     <QrCode ref="qr" :show-code.sync="showCode" />
     <!-- 给员工分配角色 -->
-    <AssignRole :show-role-dialog.sync="showRoleDialog" />
+    <AssignRole ref="ar" :show-role-dialog.sync="showRoleDialog" />
   </div>
 </template>
 
@@ -161,8 +165,10 @@ export default {
   },
   methods: {
     // 打开分配角色弹层
-    openAssingRole () {
+    openAssingRole (id) {
       this.showRoleDialog = true
+      // 调用子组件方法getUserRoles查询用户分配过的角色数据
+      this.$refs.ar.getUserRoles(id)
     },
     // 打开头像二维码弹层
     openCode (url) {

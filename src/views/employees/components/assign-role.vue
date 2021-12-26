@@ -25,7 +25,9 @@
 
 <script>
 import { getRoleList } from '@/api/setting'
+import { getUserDetailById } from '@/api/user'
 export default {
+  name: 'Ar',
   props: {
     showRoleDialog: {
       type: Boolean,
@@ -44,6 +46,13 @@ export default {
     this.getRoleList()
   },
   methods: {
+    // 查询用户之前分配过的角色=》回显
+    // 用户id
+    async getUserRoles (id) {
+      const { roleIds } = await getUserDetailById(id)
+      // 回显
+      this.roleIds = roleIds
+    },
     // 获取角色列表
     async getRoleList () {
       const { rows } = await getRoleList({
@@ -60,3 +69,8 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+::v-deep .el-checkbox {
+  margin-bottom: 15px;
+}
+</style>
