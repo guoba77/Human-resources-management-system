@@ -48,6 +48,7 @@ export default {
     ]),
     // 计算获取菜单数据array
     routes () {
+      // this.$router.options.routes 不能获取动态添加的路由规则=》造成动态添加路由的菜单不显示
       console.log('获取路由所有配置规则：', this.$router.options.routes)
       return this.$router.options.routes
     },

@@ -92,9 +92,10 @@ export const constantRoutes = [
     }]
   }
   // 404 page must be placed at the end !!!
-  // 因为后续，根据身份标识要动态添加路由进来=》不能在这里放置404页面配置
+  // 因为后续，根据身份标识动态添加路由进来=》不能在这里放置404页面配置
+  // * 通配符 =》匹配任何不存在path路径
   // { path: '*', redirect: '/404', hidden: true }
-  // 动态加到这里了
+  // 动态路由加到这里了=》 path=>/setting
 ]
 // 工厂函数=》创建路由实例
 const createRouter = () => new Router({
