@@ -16,7 +16,7 @@
         mode="vertical"
       >
         <sidebar-item
-          v-for="route in routes"
+          v-for="route in list"
           :key="route.path"
           :item="route"
           :base-path="route.path"
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
@@ -47,11 +47,15 @@ export default {
       'sidebar'
     ]),
     // 计算获取菜单数据array
-    routes () {
-      // this.$router.options.routes 不能获取动态添加的路由规则=》造成动态添加路由的菜单不显示
-      console.log('获取路由所有配置规则：', this.$router.options.routes)
-      return this.$router.options.routes
-    },
+    // 语法：mapState('模块名', ['模块中定义的变量1','模块中定义的变量2',...])
+    ...mapState('menu', ['list']),
+    // routes () {
+    //   // this.$router.options.routes 不能获取动态添加的路由规则=》造成动态添加路由的菜单不显示
+    //   console.log('获取路由所有配置规则：', this.$router.options.routes)
+    //   // return this.$router.options.routes
+    //   console.log('store实例：', this.$store)
+    //   return this.$store.state.menu.list
+    // },
     activeMenu () {
       const route = this.$route
       const { meta, path } = route
