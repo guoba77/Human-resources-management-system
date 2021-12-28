@@ -24,7 +24,13 @@
               <el-table-column prop="description" label="描述" />
               <el-table-column label="操作">
                 <template #default="{ row }">
-                  <el-button size="small" type="success">分配权限</el-button>
+                  <el-button
+                    size="small"
+                    type="success"
+                    @click="openAssingPerm(row.id)"
+                  >
+                    分配权限
+                  </el-button>
                   <el-button
                     size="small"
                     type="primary"
@@ -84,14 +90,21 @@
         }}</el-button>
       </span>
     </el-dialog>
+    <!-- 给角色分配权限 -->
+    <AssignPerm :show-assign-dialog.sync="showAssignDialog" />
   </div>
 </template>
 
 <script>
 import { getRoleList, deleteRole, addRole, getRoleDetail, updateRole } from '@/api/setting'
+import AssignPerm from './components/assign-perm.vue'
 export default {
+  components: {
+    AssignPerm
+  },
   data () {
     return {
+      showAssignDialog: false,
       showDialog: false,
       // 角色表单数据
       roleForm: {
@@ -122,6 +135,12 @@ export default {
     this.getList()
   },
   methods: {
+    // 打开给角色分配权限弹层
+    // id 角色ID
+    openAssingPerm (id) {
+      console.log(id)
+      this.showAssignDialog = true
+    },
     // 关闭弹层
     close () {
       // 清空表单数据
