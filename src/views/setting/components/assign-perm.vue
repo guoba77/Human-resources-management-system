@@ -5,11 +5,18 @@
     :visible="showAssignDialog"
     @close="closeAssignDialog"
   >
-    <!-- 权限点数据展示 -->
+    <!-- 权限点数据展示
+    1.  show-checkbox 开启选择功能（多选）
+    2.  check-strictly 关闭选择的时候父子关联
+    3. node-key="id" // 选中时绑定的数据字段(唯一) 必传属性
+    -->
     <el-tree
       ref="tree"
+      show-checkbox
+      check-strictly
       :data="permList"
       default-expand-all
+      node-key="id"
       :props="{ label: 'name' }"
     ></el-tree>
 
