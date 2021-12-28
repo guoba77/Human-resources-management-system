@@ -29,6 +29,7 @@
 
 <script>
 import { getPermissionList } from '@/api/permisson'
+import { getRoleDetail } from '@/api/setting'
 // 导入转换树形结构方法
 import { tranformTreeData } from '@/utils'
 export default {
@@ -48,6 +49,13 @@ export default {
     this.getList()
   },
   methods: {
+    // 获取角色下分配过的权限点数据=》回显
+    async getRolePerms (id) {
+      const { permIds } = await getRoleDetail(id)
+      // console.log(perms)
+      // 数据回显
+      this.$refs.tree.setCheckedKeys(permIds)
+    },
     //  获取权限点列表数据
     async getList () {
       const list = await getPermissionList()

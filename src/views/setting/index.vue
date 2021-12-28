@@ -91,7 +91,7 @@
       </span>
     </el-dialog>
     <!-- 给角色分配权限 -->
-    <AssignPerm :show-assign-dialog.sync="showAssignDialog" />
+    <AssignPerm ref="ap" :show-assign-dialog.sync="showAssignDialog" />
   </div>
 </template>
 
@@ -140,6 +140,8 @@ export default {
     openAssingPerm (id) {
       console.log(id)
       this.showAssignDialog = true
+      // 调用子组件方法getRolePerms获取回显数据
+      this.$refs.ap.getRolePerms(id)
     },
     // 关闭弹层
     close () {
