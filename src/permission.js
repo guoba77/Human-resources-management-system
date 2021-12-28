@@ -46,7 +46,8 @@ router.beforeEach(async (to, from, next) => {
         })
         console.log('当前登录人可以看的页面：', canLook)
         // 动态添加路由规则=》生效
-        router.addRoutes(canLook)
+        // router.addRoutes(canLook)
+        router.addRoutes([...canLook, { path: '*', redirect: '/404', hidden: true }])
       }
     }
   } else {

@@ -90,9 +90,11 @@ export const constantRoutes = [
       component: () => import('@/views/dashboard/index'),
       meta: { title: '首页', icon: 'dashboard' }
     }]
-  },
+  }
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // 因为后续，根据身份标识要动态添加路由进来=》不能在这里放置404页面配置
+  // { path: '*', redirect: '/404', hidden: true }
+  // 动态加到这里了
 ]
 // 工厂函数=》创建路由实例
 const createRouter = () => new Router({
