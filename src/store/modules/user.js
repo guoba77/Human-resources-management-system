@@ -5,6 +5,7 @@ import { login, getUserInfo, getUserDetailById } from '@/api/user'
 // 导入持计划方法
 import * as auth from '@/utils/auth'
 // console.log('导入auth模块所有方法：', auth)
+import { resetRouter } from '@/router'
 
 export default {
   // 开启命名空间（模块化）
@@ -85,6 +86,11 @@ export default {
     logoutAction ({ commit }) {
       commit('delToken')
       commit('delUser')
+      // 1. 重置路由，避免缓存
+      resetRouter()
+      // 2. 清除菜单数据，只留下静态路由的数据
+      // 说明：跨模块调用=》第三个参数必须传入{ root: true }
+      commit('menu/setList', [], { root: true })
     }
   }
 }
