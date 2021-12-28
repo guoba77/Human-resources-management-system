@@ -77,6 +77,8 @@ export default {
         await this.$refs.fm.validate()
         await saveUserDetailById(this.userDetail)
         this.$message.success('更新成功')
+        // 更新vuex数据
+        this.$store.dispatch('user/getUserAction')
         // 返回员工列表
         this.$router.back()
       } catch (error) {

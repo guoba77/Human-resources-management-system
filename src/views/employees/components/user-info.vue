@@ -82,6 +82,8 @@ export default {
         if (!flag) return
         await saveUserDetailById(this.userDetail)
         this.$message.success('更新成功')
+        // 更新vuex数据
+        this.$store.dispatch('user/getUserAction')
       })
     }
   }
