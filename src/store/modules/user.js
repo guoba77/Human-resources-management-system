@@ -72,8 +72,11 @@ export default {
       const user = await getUserInfo()
       // 2. 获取登录人头像
       const photo = await getUserDetailById(user.userId)
-      // console.log('登录人信息：', user, photo)
+      console.log('登录人信息：', user, photo)
       commit('setUser', { ...user, ...photo })
+      // 返回数据=》外边调用，可以通过.then或者await获取
+      // return 的值相当于resolve(值)
+      return user.roles
     },
     /**
      * 退出登录=》删除token和登录人user信息

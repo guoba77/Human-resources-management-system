@@ -1,4 +1,4 @@
-import router from './router'
+import router, { asyncRoutes } from './router'
 import store from './store'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
@@ -14,7 +14,7 @@ const whiteList = ['/login', '/404']
  * from 从哪来（从哪个页面跳转过来）
  * next:function 放行
  */
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   // start progress bar 显示页面加载进度条
   NProgress.start()
   /**
@@ -31,7 +31,22 @@ router.beforeEach((to, from, next) => {
       next()
       // 放行后，获取登录人信息(避免每次跳转重复获取登录人信息)
       if (!store.getters.name) {
-        store.dispatch('user/getUserAction')
+        const roles = await store.dispatch('user/getUserAction')
+        /**
+         * 权限控制：页面访问控制
+         * 1. 获取当前登录人页面的访问权限=》menus（身份标识）
+         * 2. 根据menus中页面的身份标识，过滤动态路由
+         * 3. 调用router实例addRoutes动态添加
+         */
+        console.log('获取登录人权限点身份标识数据：', roles.menus)
+        // canLook 当前登录人可以查看的页面路由规则
+        const canLook = asyncRoutes.filter((item) => {
+          // 根据遍历的动态路由children中第一个子路由的name判断，是否在roles.menus中=》有就留下
+          return roles.menus.includes(item.children[0].name)
+        })
+        console.log('当前登录人可以看的页面：', canLook)
+        // 动态添加路由规则=》生效
+        router.addRoutes(canLook)
       }
     }
   } else {

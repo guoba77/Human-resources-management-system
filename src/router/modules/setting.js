@@ -7,7 +7,7 @@ export default {
   children: [
     {
       path: '',
-      name: 'setting', // 后期：权限控制会使用
+      name: 'settings', // 后期：权限控制会使用
       component: () => import('@/views/setting'),
       meta: { title: '公司设置', icon: 'setting' }
     }
