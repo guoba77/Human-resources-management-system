@@ -99,7 +99,9 @@ const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   // 暂时合并（说明：后期动态路由是要根据用户权限，动态添加的）
-  routes: [...constantRoutes, ...asyncRoutes]
+  // routes: [...constantRoutes, ...asyncRoutes]
+  routes: [...constantRoutes]
+
 })
 // 通过工厂函数得到路由实例
 const router = createRouter()
