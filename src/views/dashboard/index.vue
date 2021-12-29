@@ -75,6 +75,7 @@
             <span>绩效指数</span>
           </div>
           <!-- 放置雷达图（封装基于echarts图表组件） -->
+          <Chart />
         </el-card>
         <!-- 帮助连接 -->
         <el-card class="box-card">
@@ -112,10 +113,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import WorkCalen from './components/work-calendar.vue'
+import Chart from './components/chart'
 export default {
   name: 'Dashboard',
   components: {
-    WorkCalen
+    WorkCalen,
+    Chart
   },
   computed: {
     ...mapGetters(['avatar', 'name', 'company', 'dept', 'workNumber'])
