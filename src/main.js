@@ -26,6 +26,11 @@ import * as dicts from '@/directives'
 
 // 导入自己写的插件
 import myPluninComponent from '@/components'
+// 导入全局混入对象
+import MyMixin from '@/mixin'
+
+// 注册（安装）全局混入对象
+Vue.mixin(MyMixin)
 // console.log('指令对象：', dicts)
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })

@@ -95,13 +95,14 @@ export const constantRoutes = [
   // 因为后续，根据身份标识动态添加路由进来=》不能在这里放置404页面配置
   // * 通配符 =》匹配任何不存在path路径
   // { path: '*', redirect: '/404', hidden: true }
-  // 动态路由加到这里了=》 path=>/setting
+  // 动态路由加到这里了（异步）=》 path=>/setting
 ]
 // 工厂函数=》创建路由实例
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   // 暂时合并（说明：后期动态路由是要根据用户权限，动态添加的）
+  // 写死
   // routes: [...constantRoutes, ...asyncRoutes]
   routes: [...constantRoutes]
 

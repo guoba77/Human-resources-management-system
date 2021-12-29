@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
     <div v-fb class="test">修改test</div>
-    <p :style="{ color: stys.menuActiveText }">git练习</p>
+    <p :style="{ color: stys.menuActiveText }">git练习：{{ hiMixin }}</p>
     <!-- 使用自定义指令 -->
     <input v-fb="color" type="text" />
   </div>
