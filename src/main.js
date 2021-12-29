@@ -28,7 +28,9 @@ import * as dicts from '@/directives'
 import myPluninComponent from '@/components'
 // 导入全局混入对象
 import MyMixin from '@/mixin'
-
+// 导入全局echarts插件
+import ChartPlungin from '@/utils/chart'
+Vue.use(ChartPlungin)
 // 注册（安装）全局混入对象
 Vue.mixin(MyMixin)
 // console.log('指令对象：', dicts)

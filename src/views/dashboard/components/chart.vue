@@ -6,15 +6,6 @@
 </template>
 
 <script>
-// 全量引入
-// import * as echarts from 'echarts'
-// 按需引入
-import * as echarts from 'echarts/core'
-import { TooltipComponent } from 'echarts/components'
-import { RadarChart } from 'echarts/charts'
-import { CanvasRenderer } from 'echarts/renderers'
-echarts.use([TooltipComponent, RadarChart, CanvasRenderer])
-
 export default {
   mounted () {
     // 只能在这里初始化绘制
@@ -24,7 +15,7 @@ export default {
     // 初始化图表
     initChart () {
       // 1. 基于准备好的dom，初始化echarts实例
-      const myChart = echarts.init(this.$refs.chartBox)
+      const myChart = this.echarts.init(this.$refs.chartBox)
       // 2. 绘制图表 => 调用myChart.setOption(图表配置项对象option：不同图表配置)
       // opt =》 代表不同图表的配置项
       const opt = {
