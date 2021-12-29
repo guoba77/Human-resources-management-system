@@ -1,11 +1,15 @@
 <template>
   <el-calendar v-model="currentDate">
-    <!-- 通过具名插槽dateCell自定义样式结构 -->
-    <template #dateCell>
+    <!-- 通过具名插槽dateCell自定义样式结构
+    1. date当前时间的日期类型
+    2. data.day当前年月日时间 =》2021-11-28
+    -->
+    <template #dateCell="{ date, data }">
       <!-- 小格子自定义结构 -->
       <div class="date-content">
-        <span class="text">01</span>
-        <span class="rest">休</span>
+        <span class="text">{{ formatDay(data.day) }}</span>
+        <!-- 周六日显示休 -->
+        <span v-if="isWeekend(date)" class="rest">休</span>
       </div>
     </template>
   </el-calendar>
@@ -16,6 +20,17 @@ export default {
   data () {
     return {
       currentDate: new Date()
+    }
+  },
+  methods: {
+    // 格式化获取日
+    // ymd 年-月-日
+    formatDay (ymd) {
+      return ymd.split('-')[2]
+    },
+    // 判断是否是周六日
+    isWeekend (date) {
+      return date.getDay() === 6 || date.getDay() === 0
     }
   }
 }
