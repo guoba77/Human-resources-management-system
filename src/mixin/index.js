@@ -26,7 +26,10 @@ export default {
     canClick (point) {
       const { user } = store.state.user
       // 核心：point在不在当前登录人的身份标识points数组中=》在=》返回true
-      return user.roles.points.includes(point)
+      // 退出登录报错：// vue.runtime.esm.js?2b0e:619 [Vue warn]: Error in render: "TypeError: Cannot read properties of undefined (reading 'points')"
+      // ?操作符使用场景：用来处理对象读取层级比较深（大于1层）的异常情况
+      // 解决：在上一层数据属性名后加个?
+      return user.roles?.points.includes(point)
     }
   }
 }
