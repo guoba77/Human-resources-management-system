@@ -25,6 +25,9 @@ export default {
     ...mapGetters([
       'name'
     ])
+  },
+  created () {
+    this.log('我是首页', 'orange')
   }
 }
 </script>

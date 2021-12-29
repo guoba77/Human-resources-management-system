@@ -30,6 +30,15 @@ export default {
       // ?操作符使用场景：用来处理对象读取层级比较深（大于1层）的异常情况
       // 解决：在上一层数据属性名后加个?
       return user.roles?.points.includes(point)
+    },
+    // 自定义日志方法
+    /**
+     *
+     * @param {*} txt 打印输出文字
+     * @param {*} bg 日志的背景色
+     */
+    log (txt, bg) {
+      console.log(`%c ${txt}`, `width:100px;height:20px;padding:5px 0;padding-right:5px;border-radius:5px;background:${bg || '#42b983'};color:#fff;`)
     }
   }
 }
