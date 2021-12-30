@@ -8,9 +8,10 @@ import PageTools from './PageTools'
 import UploadExcel from './UploadExcel'
 import UploadImg from './UploadImg'
 import ScreenFull from './ScreenFull'
+import Lang from './Lang'
 
 // 1. 准备数组=》存放被注册的组件
-const cps = [PageTools, UploadExcel, UploadImg, ScreenFull]
+const cps = [PageTools, UploadExcel, UploadImg, ScreenFull, Lang]
 
 // 导出插件
 export default {

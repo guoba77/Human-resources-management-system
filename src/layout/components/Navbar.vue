@@ -15,6 +15,8 @@
 
     <!-- 右侧 -->
     <div class="right-menu">
+      <!-- 国际化切换 -->
+      <Lang class="ricon" />
       <!-- 全屏按钮组件 -->
       <ScreenFull class="ricon" />
       <!-- 饿了吗下拉菜单 -->

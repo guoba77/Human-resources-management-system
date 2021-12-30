@@ -66,6 +66,6 @@ new Vue({
   el: '#app',
   router, // 所有组件可以通过this.$router(跳转) | this.$route（获取路由参数）
   store, // 所有组件可以通过this.$store
-  i18n, // 所有组件可以访问 this.$t 翻译方法
+  i18n, // 所有组件可以访问 this.$t 翻译方法 | this.$i18n 国际化插件实例
   render: h => h(App)
 })

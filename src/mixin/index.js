@@ -38,7 +38,8 @@ export default {
      * @param {*} bg 日志的背景色
      */
     log (txt, bg) {
-      console.log(`%c ${txt}`, `width:100px;height:20px;padding:5px 0;padding-right:5px;border-radius:5px;background:${bg || '#42b983'};color:#fff;`)
+      console.log(`%c 打印：`, `width:100px;height:20px;padding:5px 0;padding-right:5px;border-radius:5px;background:${bg || '#42b983'};color:#fff;`)
+      console.log(txt)
     }
   }
 }
