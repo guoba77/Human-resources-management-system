@@ -1,5 +1,10 @@
 <template>
-  <el-calendar v-model="currentDate">
+  <!--
+  问题：国际化切换el-calendar日历组件，星期没有动态翻译
+  解决：让组件重新渲染
+  key 是组件的唯一标识（身份证），如果发生变化，会重新渲染组件
+ -->
+  <el-calendar :key="$i18n.locale" v-model="currentDate">
     <!-- 通过具名插槽dateCell自定义样式结构
     1. date当前时间的日期类型
     2. data.day当前年月日时间 =》2021-11-28
