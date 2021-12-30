@@ -11,14 +11,20 @@ export default {
     // 只能在这里初始化绘制
     this.initChart()
   },
+  destroyed () {
+    // 组件销毁清除定时器
+    clearInterval(this.timer)
+  },
   methods: {
     // 初始化图表
     initChart () {
       // 1. 基于准备好的dom，初始化echarts实例
-      const myChart = this.echarts.init(this.$refs.chartBox)
+      // 直接通过this.属性名 存值=》存储echarts实例（不是响应式的，data中定义的是响应式）
+      console.log('组件实例：', this)
+      this.myChart = this.echarts.init(this.$refs.chartBox)
       // 2. 绘制图表 => 调用myChart.setOption(图表配置项对象option：不同图表配置)
       // opt =》 代表不同图表的配置项
-      const opt = {
+      this.opt = {
         // 鼠标经过提示
         tooltip: {},
         // 雷达图专用配置
@@ -50,7 +56,27 @@ export default {
           }
         ]
       }
-      myChart.setOption(opt)
+      // myChart.setOption(this.opt)
+      // 存储定时器ID
+      this.timer = setInterval(() => {
+        // 每隔2s调用修改数据方法=》刷新图标
+        this.changeData()
+      }, 2000)
+    },
+    changeData () {
+      const data = []
+      for (let index = 0; index < 5; index++) {
+        // per  当前人
+        const per = { value: [], name: `李${index}` }
+        for (let j = 0; j < 6; j++) {
+          per.value.push(Math.floor(Math.random() * 100 + 1))
+        }
+        data.push(per)
+      }
+      // 绘制图表
+      this.opt.series[0].data = data
+      // 刷新图标
+      this.myChart.setOption(this.opt)
     }
   }
 }
