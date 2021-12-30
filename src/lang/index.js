@@ -16,7 +16,7 @@ const i18n = new VueI18n({
    * 1. zh表示中文=》读取中文语言包=》网页显示中文
    * 2. en表示英文=>读取英文语言包=》网页显示英文
    */
-  locale: 'en',
+  locale: 'zh',
   // 将elementUI语言包加入到插件语言数据里
   // 这里是：放语言包
   messages: {

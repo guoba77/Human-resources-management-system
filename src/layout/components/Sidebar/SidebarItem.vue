@@ -19,7 +19,7 @@
         >
           <item
             :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
-            :title="onlyOneChild.meta.title"
+            :title="$t(`route.${onlyOneChild.name}`)"
           />
         </el-menu-item>
       </app-link>

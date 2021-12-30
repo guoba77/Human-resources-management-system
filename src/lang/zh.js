@@ -6,6 +6,7 @@
  * 3. 语言包对象中属性名的值是对应语言的翻译结果
  */
 export default {
+  // 菜单
   route: {
     dashboard: '首页',
     manage: '后台管理',
