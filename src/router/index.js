@@ -99,7 +99,7 @@ export const constantRoutes = [
 ]
 // 工厂函数=》创建路由实例
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  mode: 'history', // require service support 默认值是hash
   scrollBehavior: () => ({ y: 0 }),
   // 暂时合并（说明：后期动态路由是要根据用户权限，动态添加的）
   // 写死
