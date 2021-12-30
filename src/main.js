@@ -24,6 +24,9 @@ import '@/permission' // permission control
 // 导入指令对象
 import * as dicts from '@/directives'
 
+// 导入国际化插件
+import i18n from '@/lang'
+
 // 导入自己写的插件
 import myPluninComponent from '@/components'
 // 导入全局混入对象
@@ -37,7 +40,11 @@ Vue.mixin(MyMixin)
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
-Vue.use(ElementUI)
+// Vue.use(ElementUI)
+// 翻译饿了吗组件库
+Vue.use(ElementUI, {
+  i18n: (k, v) => i18n.t(k, v)
+})
 
 Vue.use(myPluninComponent)
 
@@ -59,5 +66,6 @@ new Vue({
   el: '#app',
   router, // 所有组件可以通过this.$router(跳转) | this.$route（获取路由参数）
   store, // 所有组件可以通过this.$store
+  i18n, // 所有组件可以访问 this.$t 翻译方法
   render: h => h(App)
 })
