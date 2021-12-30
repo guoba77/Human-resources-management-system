@@ -17,6 +17,8 @@
 </template>
 
 <script>
+// 导入操作cookie插件
+import ck from 'js-cookie'
 export default {
   name: 'Lang',
   methods: {
@@ -25,6 +27,8 @@ export default {
       this.log(this.$i18n)
       // 使用国际化插件实例：$i18n动态修改locale的值
       this.$i18n.locale = lang // 设置给本地的i18n插件
+      // 存储国际化切换的状态=》中文zh | 英文en
+      ck.set('lang', lang)
       this.$message.success('切换多语言成功')
     }
   }

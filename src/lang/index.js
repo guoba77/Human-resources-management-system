@@ -7,6 +7,9 @@ import elementZH from 'element-ui/lib/locale/lang/zh-CN' // 引入饿了么的�
 import webZH from './zh'
 import webEN from './en'
 
+// 导入操作cookie插件
+import ck from 'js-cookie'
+
 Vue.use(VueI18n) // 全局注册国际化包
 
 // 创建国际化插件的实例
@@ -16,7 +19,8 @@ const i18n = new VueI18n({
    * 1. zh表示中文=》读取中文语言包=》网页显示中文
    * 2. en表示英文=>读取英文语言包=》网页显示英文
    */
-  locale: 'zh',
+  // 注意：读取上次存储的语言状态
+  locale: ck.get('lang') || 'zh',
   // 将elementUI语言包加入到插件语言数据里
   // 这里是：放语言包
   messages: {
