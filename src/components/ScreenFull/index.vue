@@ -3,9 +3,13 @@
   <div>
     <!-- svg-icon组件=》渲染svg图标
     用法：icon-class="svg图片名字"
+
+    需求：icon-class的图标跟随全屏切换状态变化的=》监控全屏切换=》获取当前切换状态
+    1. 如果不是全屏状态 =》显示：fullscreen
+    2. 是全屏状态 =》显示：exit-fullscreen
     -->
     <svg-icon
-      icon-class="fullscreen"
+      :icon-class="isFull ? 'exit-fullscreen' : 'fullscreen'"
       class="fullscreen"
       @click="toggleScreen"
     />
@@ -16,6 +20,20 @@
 import sf from 'screenfull'
 export default {
   name: 'ScreenFull',
+  data () {
+    return {
+      // 是否是全屏
+      isFull: false
+    }
+  },
+  created () {
+    // 组件创建之后，立即监控网页全屏状态
+    this.watchScreen()
+  },
+  destroyed () {
+    // 组件销毁解绑全屏监控事件=》释放内存
+    sf.off('change')
+  },
   methods: {
     // 开启/关闭全屏
     toggleScreen () {
@@ -30,6 +48,13 @@ export default {
       // 支持就调用开启/关闭全屏
       // 判断如果不是全屏，执行sf.toggle方法就开启全屏，相反关闭
       sf.toggle()
+    },
+    // 监控网页是否进入全屏状态
+    watchScreen () {
+      sf.on('change', () => {
+        console.log('当前网页是否是全屏：', sf.isFullscreen)
+        this.isFull = sf.isFullscreen
+      })
     }
   }
 }
