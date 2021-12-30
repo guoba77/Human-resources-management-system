@@ -15,6 +15,8 @@
 
     <!-- 右侧 -->
     <div class="right-menu">
+      <!-- 全屏按钮组件 -->
+      <ScreenFull class="ricon" />
       <!-- 饿了吗下拉菜单 -->
       <el-dropdown class="avatar-container" trigger="click">
         <!-- 显示登录人信息 -->
@@ -142,7 +144,12 @@ export default {
     float: right;
     height: 100%;
     line-height: 50px;
-
+    // 控制按钮图标样式
+    .ricon {
+      display: inline-block;
+      margin-right: 20px;
+      vertical-align: middle;
+    }
     &:focus {
       outline: none;
     }
