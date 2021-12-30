@@ -9,7 +9,7 @@
     <!-- <breadcrumb class="breadcrumb-container" /> -->
     <!-- 左侧 -->
     <div class="app-breadcrumb">
-      江苏传智播客教育科技股份有限公司
+      {{ $t("navbar.name") }}
       <span class="breadBtn">体验版</span>
     </div>
 

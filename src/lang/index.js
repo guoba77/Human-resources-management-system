@@ -3,6 +3,9 @@ import VueI18n from 'vue-i18n' // 引入国际化的插件包
 // 饿了吗组件库提供的语言包=> 翻译组件库内部的文字
 import elementEN from 'element-ui/lib/locale/lang/en' // 引入饿了么的英文包
 import elementZH from 'element-ui/lib/locale/lang/zh-CN' // 引入饿了么的中文包
+// 导入人资系统的语言包 =》翻译人资系统自己的内容
+import webZH from './zh'
+import webEN from './en'
 
 Vue.use(VueI18n) // 全局注册国际化包
 
@@ -19,11 +22,13 @@ const i18n = new VueI18n({
   messages: {
     // 英文环境下的语言数据
     en: {
-      ...elementEN
+      ...elementEN,
+      ...webEN
     },
     // 中文环境下的语言数据
     zh: {
-      ...elementZH
+      ...elementZH,
+      ...webZH
     }
   }
 })

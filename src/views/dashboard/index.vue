@@ -26,7 +26,7 @@
         <!-- 工作日历（封装日历组件） -->
         <el-card class="box-card">
           <div slot="header" class="header">
-            <span>工作日历</span>
+            <span>{{ $t("dashboard.title") }}</span>
           </div>
           <!-- 放置日历组件 -->
           <WorkCalen />
