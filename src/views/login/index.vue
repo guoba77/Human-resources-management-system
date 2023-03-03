@@ -111,7 +111,7 @@ export default {
   watch: {
     // 监听$route的参数变化
     $route: {
-      handler: function (route) {
+      handler: function(route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true

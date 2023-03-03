@@ -32,6 +32,7 @@ router.beforeEach(async (to, from, next) => {
       // 放行后，获取登录人信息(避免每次跳转重复获取登录人信息)
       if (!store.getters.name) {
         const roles = await store.dispatch('user/getUserAction')
+        console.log('roles', roles)
         /**
          * 权限控制：页面访问控制
          * 1. 获取当前登录人页面的访问权限=》menus（身份标识）
